@@ -2,8 +2,10 @@
 using System.Linq;
 using SystemBase;
 using Systems.Movement;
+using Systems.Player.Events;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Systems.Player
 {
@@ -19,25 +21,13 @@ namespace Systems.Player
 
             SystemFixedUpdate()
                 .Sample(TimeSpan.FromMilliseconds(100))
-                .Subscribe(CalculateSway(component))
+                .Subscribe(_ => CalculateSway(component))
                 .AddTo(component);
-        }
-
-        private static Action<float> CalculateSway(PlayerBrainComponent component)
-        {
-            return _ =>
-            {
-                var movement = component.GetComponent<MovementComponent>();
-                component.VelocityCache.Add(movement.Velocity);
-                var swayFactor = component.VelocityCache.Buffer.Aggregate((vector2, vector3) =>
-                    new Vector2(vector2.x + vector3.x, vector2.y + vector3.y)).sqrMagnitude;
-                var swayPercent = swayFactor / component.criticalSwayFactor;
-                
-                if (swayPercent > 1.0f)
-                {
-                    Debug.Log("Fall");
-                }
-            };
+            
+            SystemUpdate()
+                .Sample(TimeSpan.FromMilliseconds(500))
+                .Subscribe(_ => SetSwayDirection(component))
+                .AddTo(component);
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
@@ -47,6 +37,37 @@ namespace Systems.Player
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
             RotatePlayerDependingOfMovement(player, movement);
+            ApplySway(player, movement);
+        }
+        
+        private static void CalculateSway(PlayerBrainComponent player)
+        {
+            var movement = player.GetComponent<MovementComponent>();
+            player.VelocityCache.Add(movement.Velocity);
+            var swayFactor = player.VelocityCache.Buffer.Aggregate((vector2, vector3) =>
+                new Vector2(vector2.x + vector3.x, vector2.y + vector3.y)).sqrMagnitude;
+            player.SwayPercent = swayFactor / player.criticalSwayFactor;
+            MessageBroker.Default.Publish(new PlayerSwayUpdateEvent{SwayPercent = player.SwayPercent});
+        }
+        
+        private static void SetSwayDirection(PlayerBrainComponent player)
+        {
+            var vel = player.GetComponent<MovementComponent>().Velocity;
+            player.SwayDirection = Random.value > 0.5f ? new Vector2(-vel.y, vel.x).normalized : 
+                new Vector2(vel.y, -vel.x).normalized;
+        }
+
+        private static void ApplySway(PlayerBrainComponent player, MovementComponent movement)
+        {
+            var newRotation =
+                Quaternion.AngleAxis(player.maxRotation * Math.Min(player.SwayPercent, 1.0f),
+                    movement.Velocity.x < 0 ? Vector3.forward : Vector3.back);
+            movement.transform.rotation *= newRotation;
+            movement.Direction.Value += player.SwayDirection * player.SwayPercent;  
+            if (player.SwayPercent > 1.0f)
+            {
+                MessageBroker.Default.Publish(new PlayerFallEvent());
+            }
         }
 
         private static void RotatePlayerDependingOfMovement(PlayerBrainComponent player, MovementComponent movement)
