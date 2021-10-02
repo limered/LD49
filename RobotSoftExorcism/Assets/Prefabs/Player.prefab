@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2511c21192c4711b5b4b6cc8c70b29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goFriction: 0.5
+  stopFriction: 5
+  maxMovementPosition: {x: 0, y: 0.1}
+  minMovementPosition: {x: 0, y: -5}
+  maxRotation: 40
 --- !u!54 &5937842047383565388
 Rigidbody:
   m_ObjectHideFlags: 0

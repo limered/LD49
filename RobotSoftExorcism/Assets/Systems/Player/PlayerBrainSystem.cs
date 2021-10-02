@@ -1,4 +1,6 @@
-﻿using SystemBase;
+﻿using System;
+using System.Linq;
+using SystemBase;
 using Systems.Movement;
 using UniRx;
 using UnityEngine;
@@ -14,6 +16,28 @@ namespace Systems.Player
                 .Select(_ => component)
                 .Subscribe(ControlPlayer)
                 .AddTo(component);
+
+            SystemFixedUpdate()
+                .Sample(TimeSpan.FromMilliseconds(100))
+                .Subscribe(CalculateSway(component))
+                .AddTo(component);
+        }
+
+        private static Action<float> CalculateSway(PlayerBrainComponent component)
+        {
+            return _ =>
+            {
+                var movement = component.GetComponent<MovementComponent>();
+                component.VelocityCache.Add(movement.Velocity);
+                var swayFactor = component.VelocityCache.Buffer.Aggregate((vector2, vector3) =>
+                    new Vector2(vector2.x + vector3.x, vector2.y + vector3.y)).sqrMagnitude;
+                var swayPercent = swayFactor / component.criticalSwayFactor;
+                
+                if (swayPercent > 1.0f)
+                {
+                    Debug.Log("Fall");
+                }
+            };
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
@@ -22,6 +46,21 @@ namespace Systems.Player
             SetPlayerMovement(movement);
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
+            RotatePlayerDependingOfMovement(player, movement);
+        }
+
+        private static void RotatePlayerDependingOfMovement(PlayerBrainComponent player, MovementComponent movement)
+        {
+            var rotation = movement.Velocity.x / 2 * player.maxRotation;
+            if (rotation > 0)
+            {
+                rotation = Math.Min(rotation, player.maxRotation);
+            }
+            else if (rotation < 0)
+            {
+                rotation = Math.Max(rotation, -player.maxRotation);
+            }
+            player.transform.rotation = Quaternion.AngleAxis(rotation, Vector3.up);
         }
 
         private static void StopPlayerOnBoundary(PlayerBrainComponent player, MovementComponent movement)
