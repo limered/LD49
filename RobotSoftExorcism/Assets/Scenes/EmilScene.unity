@@ -288,6 +288,14 @@ PrefabInstance:
       propertyPath: stopFriction
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5937842047383565382, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
+      propertyPath: maxMovementPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937842047383565382, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
+      propertyPath: minMovementPosition.y
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 5937842047383565383, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
       propertyPath: m_Name
       value: Player

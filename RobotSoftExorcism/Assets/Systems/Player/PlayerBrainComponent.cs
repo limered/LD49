@@ -9,5 +9,7 @@ namespace Systems.Player
     {
         public float goFriction;
         public float stopFriction;
+        public Vector2 maxMovementPosition;
+        public Vector2 minMovementPosition;
     }
 }

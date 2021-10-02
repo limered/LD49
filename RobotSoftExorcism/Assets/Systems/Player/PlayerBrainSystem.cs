@@ -21,6 +21,31 @@ namespace Systems.Player
             var movement = player.GetComponent<MovementComponent>();
             SetPlayerMovement(movement);
             StopPlayerIfItIsNotMoving(player, movement);
+            StopPlayerOnBoundary(player, movement);
+        }
+
+        private static void StopPlayerOnBoundary(PlayerBrainComponent player, MovementComponent movement)
+        {
+            if (!IsOutsideOfBounds(player, movement.transform.position)) return;
+            
+            movement.Velocity = new Vector2(movement.Velocity.x, 0);
+            var oldPosition = movement.transform.position;
+            movement.Direction.Value = new Vector2(movement.Direction.Value.x, 0);
+                
+            if (movement.transform.position.y > player.maxMovementPosition.y) 
+            {
+                movement.transform.position = new Vector3(oldPosition.x, player.maxMovementPosition.y, oldPosition.z);
+                
+            }else if (movement.transform.position.y < player.minMovementPosition.y)
+            {
+                movement.transform.position = new Vector3(oldPosition.x, player.minMovementPosition.y, oldPosition.z);
+            }                                                                      
+        }
+
+        private static bool IsOutsideOfBounds(PlayerBrainComponent player, Vector3 position)
+        {
+            return position.y > player.maxMovementPosition.y ||
+                   position.y < player.minMovementPosition.y;                                                  
         }
 
         private static void StopPlayerIfItIsNotMoving(PlayerBrainComponent playerBrainComponent, MovementComponent movement)
