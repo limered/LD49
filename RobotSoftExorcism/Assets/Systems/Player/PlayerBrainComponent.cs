@@ -16,6 +16,8 @@ namespace Systems.Player
 
         public float criticalSwayFactor;
         public float SwayFactor { get; set; }
+        public float SwayPercent { get; set; }
         public RingBuffer<Vector2> VelocityCache { get; set; } = new RingBuffer<Vector2>(10);
+        public Vector2 SwayDirection { get; set; }
     }
 }
