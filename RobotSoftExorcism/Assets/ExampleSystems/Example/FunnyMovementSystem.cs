@@ -37,8 +37,8 @@ namespace ExampleSystems.Example
                  * to intercept values/errors and print them before they reach your Subscribtion methods.
                  */
                 .LogError() // Logs OnError and prints exception by using Debug.LogException(). Optionally you can provide a format function.
-                .LogOnNext("move funny") //Logs every OnNext value. Optionally you can provide a format string where {0} is replaced by the value.
-
+                .LogOnNext("move funny") //Logs every OnNext value. Optionally you can provide a format string where {0} is replaced by the val
+                
                 .Subscribe(_ => MoveFunny(comp))
                 .AddTo(comp);
         }
