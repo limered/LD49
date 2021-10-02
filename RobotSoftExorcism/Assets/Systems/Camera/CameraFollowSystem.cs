@@ -13,9 +13,6 @@ namespace Systems.Camera
         private PlayerBrainComponent _player;
 
         private MovementComponent _movementComponent;
-        // Start is called before the first frame update
-
-        private Vector3 _vel = Vector3.zero;
 
         public override void Register(CameraFollowComponent component)
         {
@@ -29,10 +26,12 @@ namespace Systems.Camera
         {
             Vector3 currentPostion = component.transform.position;
             Vector3 distance = _movementComponent.transform.position - currentPostion;
+            float velocity = Mathf.Abs(_movementComponent.Velocity.x) > 0.05f ? _movementComponent.Velocity.x : Mathf.Sign(_movementComponent.Velocity.x) * 0.5f;
             if (Mathf.Abs(distance.x) > 2)
             {
+                Debug.Log(velocity);
                 Vector3 newPostion = component.transform.position;
-                newPostion.x += _movementComponent.Velocity.x * Time.deltaTime * 1.4f;
+                newPostion.x += velocity * Time.deltaTime * 1.4f;
                 component.transform.position = Vector3.Lerp(currentPostion, newPostion, component.lerpFraction);
             }
         }
