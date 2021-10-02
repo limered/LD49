@@ -11,13 +11,13 @@ namespace Systems
 {
     public class Game : GameBase
     {
-        private readonly StateContext<Game> _gameStateContext = new StateContext<Game>();
+        public readonly StateContext<Game> GameStateContext = new StateContext<Game>();
 
         private void Awake()
         {
             IoC.RegisterSingleton(this);
 
-            _gameStateContext.Start(new Loading());
+            GameStateContext.Start(new Loading());
 
             InstantiateSystems();
 
