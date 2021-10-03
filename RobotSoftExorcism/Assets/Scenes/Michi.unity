@@ -398,30 +398,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PukeEffect_1
       objectReference: {fileID: 0}
-    - target: {fileID: 8264864061151119589, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
-      propertyPath: stopAction
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8264864061151119589, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
-      propertyPath: scalingMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8264864061151119589, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8264864061151119589, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8264864061151119589, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8264864061151119589, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8264864061151119590, guid: 0950b6cb2cd294eb9b7969dc431e15b1, type: 3}
       propertyPath: m_RootOrder
       value: 4
