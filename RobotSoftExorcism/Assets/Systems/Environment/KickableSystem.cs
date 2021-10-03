@@ -9,8 +9,7 @@ namespace Systems.Environment
     public enum KickEffect
     {
         Yeet,
-        Animate,
-        Explode
+        Animate
     }
     [GameSystem]
     public class KickableSystem : GameSystem<KickableComponent>
@@ -27,14 +26,11 @@ namespace Systems.Environment
             switch (component.kickEffect)
             {
                 case KickEffect.Yeet:
-                    component.AddComponent<Rigidbody>().AddForce(new Vector3(1000, 1000, 0));
+                    var body = component.AddComponent<Rigidbody>();
+                    body.AddForce(new Vector3(1000, 1000, 0));
                     break;
                 case KickEffect.Animate:
                     break;
-                case KickEffect.Explode:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }

@@ -154,7 +154,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8921be6668cbb034cb0d00d2a5925e37, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.27450982}
   m_FlipX: 0
@@ -1327,8 +1327,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &5937842047383565385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1361,15 +1361,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goFriction: 2
   stopFriction: 5
-  maxMovementPosition: {x: 0, y: 0.1}
-  minMovementPosition: {x: 0, y: -5}
+  maxMovementPosition: {x: 2, y: 0.1}
+  minMovementPosition: {x: -2, y: -5}
   maxRotation: 40
   criticalSwayFactor: 2000
   pukeIncreaseValue: 10
   pukeDecreaseValue: 0.5
   maxPukeFactor: 100
   pukeParticles: {fileID: 8264864060925170236}
-  kickRange: 1
+  kickRange: 2
   poebelRange: 4
   fallenDuration: 2000
 --- !u!54 &5937842047383565388

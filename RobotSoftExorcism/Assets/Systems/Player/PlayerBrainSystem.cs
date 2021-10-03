@@ -151,26 +151,33 @@ namespace Systems.Player
 
         private static void StopPlayerOnBoundary(PlayerBrainComponent player, MovementComponent movement)
         {
-            if (!IsOutsideOfBounds(player, movement.transform.position)) return;
-            
-            movement.Velocity = new Vector2(movement.Velocity.x, 0);
-            var oldPosition = movement.transform.position;
-            movement.Direction.Value = new Vector2(movement.Direction.Value.x, 0);
-                
-            if (movement.transform.position.y > player.maxMovementPosition.y) 
-            {
-                movement.transform.position = new Vector3(oldPosition.x, player.maxMovementPosition.y, oldPosition.z);
-                
-            }else if (movement.transform.position.y < player.minMovementPosition.y)
-            {
-                movement.transform.position = new Vector3(oldPosition.x, player.minMovementPosition.y, oldPosition.z);
-            }                                                                      
-        }
+            var pos = movement.transform.position;
+            var vel = movement.Velocity;
 
-        private static bool IsOutsideOfBounds(PlayerBrainComponent player, Vector3 position)
-        {
-            return position.y > player.maxMovementPosition.y ||
-                   position.y < player.minMovementPosition.y;                                                  
+            if (pos.y > player.maxMovementPosition.y)
+            {
+                vel.y = 0;
+                pos.y = player.maxMovementPosition.y;
+            }
+            else if (pos.y < player.minMovementPosition.y)
+            {
+                vel.y = 0;
+                pos.y = player.minMovementPosition.y;
+            }
+
+            if (pos.x > player.maxMovementPosition.x)
+            {
+                vel.x = 0;
+                pos.x = player.maxMovementPosition.x;
+            }
+            else if (pos.x < player.minMovementPosition.x)
+            {
+                vel.x = 0;
+                pos.x = player.minMovementPosition.x;
+            }
+
+            movement.transform.position = pos;
+            movement.Velocity = vel;
         }
 
         private static void StopPlayerIfItIsNotMoving(PlayerBrainComponent playerBrainComponent, MovementComponent movement)
