@@ -12,11 +12,11 @@ namespace Systems.Ui
         public override void Register(UiComponent component)
         {
             MessageBroker.Default.Receive<PlayerSwayUpdateEvent>()
-                .Subscribe(e => component.fallMeterText.text = $"Fall Meter: {e.SwayPercent:P}")
+                .Subscribe(e => component.fallSlider.value = e.SwayPercent)
                 .AddTo(component);
 
             MessageBroker.Default.Receive<PlayerPukeUpdateEvent>()
-                .Subscribe(e => component.pukeMeterText.text = $"Puke Meter: {e.PukePercent:P}")
+                .Subscribe(e => component.pukeSlider.value = e.PukePercent)
                 .AddTo(component);
         }
     }
