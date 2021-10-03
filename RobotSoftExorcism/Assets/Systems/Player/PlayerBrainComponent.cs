@@ -1,5 +1,6 @@
 ﻿using SystemBase;
 using Systems.Movement;
+using UniRx;
 using UnityEngine;
 using Utils.Data;
 
@@ -13,6 +14,8 @@ namespace Systems.Player
         public Vector2 maxMovementPosition;
         public Vector2 minMovementPosition;
         public float maxRotation;
+
+        public ReactiveProperty<PlayerState> CurrentPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Normal);
 
         // Sway Stuff
         public float criticalSwayFactor;
