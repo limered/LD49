@@ -1369,7 +1369,8 @@ MonoBehaviour:
   pukeDecreaseValue: 0.5
   maxPukeFactor: 100
   pukeParticles: {fileID: 8264864060925170236}
-  kickRange: 0
+  kickRange: 1
+  poebelRange: 4
   fallenDuration: 2000
 --- !u!54 &5937842047383565388
 Rigidbody:
