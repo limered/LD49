@@ -15,7 +15,8 @@ namespace Systems.Player
         Drink,
         Fall,
         Poebel,
-        Puke
+        Puke,
+        Kick
     }
     
     [GameSystem]
@@ -51,6 +52,12 @@ namespace Systems.Player
                         playerAnimators,
                         component =>
                             component.SetSpriteWithoutAnimation((int)AnimationIndex.Puke));
+                    break;
+                case PlayerStateKicking _:
+                    Array.ForEach(
+                        playerAnimators,
+                        component =>
+                            component.SetSpriteWithoutAnimation((int)AnimationIndex.Kick));
                     break;
             }
         }
