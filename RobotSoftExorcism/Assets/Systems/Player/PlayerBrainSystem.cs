@@ -19,6 +19,13 @@ namespace Systems.Player
     [GameSystem]
     public class PlayerBrainSystem : GameSystem<PlayerBrainComponent>
     {
+        private const int CalculateSwayTime = 100;
+        private const int SwayDirectionChangeTime = 500;
+        private const int StayDownDuration = 3000;
+        private const float PukeIncreaseThreshold = 0.7f;
+        private const float FallThreshold = 1.5f;
+        private const float FallPossibility = 0.8f;
+
         public override void Register(PlayerBrainComponent component)
         {
             SystemFixedUpdate()
@@ -27,12 +34,12 @@ namespace Systems.Player
                 .AddTo(component);
 
             SystemFixedUpdate()
-                .Sample(TimeSpan.FromMilliseconds(100))
+                .Sample(TimeSpan.FromMilliseconds(CalculateSwayTime))
                 .Subscribe(_ => CalculateSway(component))
                 .AddTo(component);
             
             SystemUpdate()
-                .Sample(TimeSpan.FromMilliseconds(500))
+                .Sample(TimeSpan.FromMilliseconds(SwayDirectionChangeTime))
                 .Subscribe(_ => SetSwayDirection(component))
                 .AddTo(component);
             
@@ -46,7 +53,9 @@ namespace Systems.Player
 
         private static void Fall(PlayerBrainComponent player)
         {
-            Observable.Timer(TimeSpan.FromMilliseconds(3000))
+            // Show Fall Animation
+            
+            Observable.Timer(TimeSpan.FromMilliseconds(StayDownDuration))
                 .Subscribe(_ => player.CurrentPlayerState.Value = PlayerState.Normal)
                 .AddTo(player);
         }
@@ -65,13 +74,15 @@ namespace Systems.Player
             CalculatePukeFactor(player, movement);
             if (player.CurrentPlayerState.Value == PlayerState.Falling)
             {
-                movement.transform.localRotation = Quaternion.AngleAxis(70, Vector3.right);
+                movement.transform.localRotation = Quaternion
+                    .Slerp(movement.transform.localRotation,
+                        Quaternion.AngleAxis(70, Vector3.right), 0.5f);
             }
         }
 
         private static void CalculatePukeFactor(PlayerBrainComponent player, MovementComponent movement)
         {
-            if (player.SwayPercent > 0.7f)
+            if (player.SwayPercent > PukeIncreaseThreshold)
             {
                 player.PukeFactor += player.pukeIncreaseValue * Time.fixedDeltaTime * player.SwayPercent;
                 player.PukeFactor = Math.Min(player.PukeFactor, player.maxPukeFactor);
@@ -116,7 +127,7 @@ namespace Systems.Player
             
             movement.transform.rotation *= newRotation;
             movement.Direction.Value += player.SwayDirection * player.SwayPercent;
-            if (player.SwayPercent <= 1.5f || Random.value < 0.2f) return;
+            if (player.SwayPercent <= FallThreshold || Random.value > FallPossibility) return;
             
             MessageBroker.Default.Publish(new PlayerFallEvent());
             player.CurrentPlayerState.Value = PlayerState.Falling;
