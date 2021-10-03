@@ -9,9 +9,9 @@ namespace Systems.Environment
     {
         public override void Register(PoebelComponent component)
         {
-            component.WasPoebeledOnTrigger
-                .Subscribe(_ => Debug.Log("Poebeled"))
-                .AddTo(component);
+            // component.WasPoebeledOnTrigger
+            //     .Subscribe(_ => Debug.Log("Poebeled"))
+            //     .AddTo(component);
         }
     }
 }

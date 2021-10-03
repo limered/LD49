@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemBase.StateMachineBase;
 using Systems.Movement;
+using Systems.Player.Events;
 using UniRx;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Systems.Player.States
             context.Owner.PukePercentage = 0;
             
             context.Owner.pukeParticles.Play();
+            
+            MessageBroker.Default.Publish(new PlayerPukeEvent());
             
             Observable.Timer(TimeSpan.FromMilliseconds(3000))
                 .Subscribe(_ => {
