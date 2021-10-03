@@ -38,8 +38,22 @@ namespace Systems.Player
             StopPlayerOnBoundary(player, movement);
             RotatePlayerDependingOfMovement(player, movement);
             ApplySway(player, movement);
+            CalculatePukeFactor(player, movement);
         }
-        
+
+        private static void CalculatePukeFactor(PlayerBrainComponent player, MovementComponent movement)
+        {
+            if (player.SwayPercent > 1)
+            {
+                // Increase Puke
+                
+            }
+            else
+            {
+                //decrease Puke
+            }
+        }
+
         private static void CalculateSway(PlayerBrainComponent player)
         {
             var movement = player.GetComponent<MovementComponent>();
