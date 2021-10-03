@@ -16,7 +16,6 @@ namespace Systems.Player
     {
         private const int CalculateSwayTime = 100;
         private const int SwayDirectionChangeTime = 500;
-        private const int StayDownDuration = 2000;
         private const float PukeIncreaseThreshold = 0.7f;
         private const float FallThreshold = 1.5f;
         private const float FallPossibility = 0.8f;
@@ -92,7 +91,7 @@ namespace Systems.Player
             player.PukePercentage = player.PukeFactor / player.maxPukeFactor;
             MessageBroker.Default.Publish(new PlayerPukeUpdateEvent{PukePercent = player.PukePercentage});
 
-            if (!(player.PukePercentage > 1)) return;
+            if (player.PukePercentage < 0.99f) return;
 
             player.State.GoToState(new PlayerStatePuking());
         }

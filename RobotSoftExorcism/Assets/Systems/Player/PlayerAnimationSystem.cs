@@ -14,7 +14,8 @@ namespace Systems.Player
         HalfDrink,
         Drink,
         Fall,
-        Poebel
+        Poebel,
+        Puke
     }
     
     [GameSystem]
@@ -44,6 +45,12 @@ namespace Systems.Player
                         playerAnimators,
                         component =>
                             component.SetSpriteWithoutAnimation((int)AnimationIndex.Fall));
+                    break;
+                case PlayerStatePuking _:
+                    Array.ForEach(
+                        playerAnimators,
+                        component =>
+                            component.SetSpriteWithoutAnimation((int)AnimationIndex.Puke));
                     break;
             }
         }

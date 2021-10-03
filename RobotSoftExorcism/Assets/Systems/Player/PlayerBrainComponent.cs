@@ -29,6 +29,7 @@ namespace Systems.Player
         public float maxPukeFactor;
         public float PukeFactor { get; set; }
         public float PukePercentage { get; set; }
+        public ParticleSystem pukeParticles;
 
 
         public float fallenDuration = 2000;
