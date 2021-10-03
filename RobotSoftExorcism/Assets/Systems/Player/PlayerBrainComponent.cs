@@ -31,7 +31,11 @@ namespace Systems.Player
         public float PukePercentage { get; set; }
         public ParticleSystem pukeParticles;
 
+        // Kick
+        public float kickRange;
+        public float poebelRange;
 
         public float fallenDuration = 2000;
+        
     }
 }

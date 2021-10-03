@@ -2,7 +2,6 @@
 using SystemBase;
 using SystemBase.StateMachineBase;
 using Systems.Animation;
-using Systems.Player.Events;
 using Systems.Player.States;
 using UniRx;
 
@@ -58,6 +57,12 @@ namespace Systems.Player
                         playerAnimators,
                         component =>
                             component.SetSpriteWithoutAnimation((int)AnimationIndex.Kick));
+                    break;
+                case PlayerStatePoebling _:
+                    Array.ForEach(
+                        playerAnimators,
+                        component =>
+                            component.SetSpriteWithoutAnimation((int)AnimationIndex.Poebel));
                     break;
             }
         }
