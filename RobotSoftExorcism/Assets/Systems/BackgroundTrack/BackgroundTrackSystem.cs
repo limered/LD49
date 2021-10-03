@@ -106,13 +106,7 @@ namespace Systems.BackgroundTrack
                 positions[i] = new Vector3(width * Mathf.Cos (angle), height * Mathf.Sin (angle), 0.0f);
                 positions[i] = q * positions[i] + center;
             }
- 
             return positions;
-        }
-
-        private Vector3 GetPoint(BackgroundTrackComponent component, int point)
-        {
-            return component.transform.position + _positions[point];
         }
     }
 }
