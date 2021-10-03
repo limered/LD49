@@ -13,26 +13,45 @@ namespace Systems.Camera
         private PlayerBrainComponent _player;
 
         private MovementComponent _movementComponent;
+        
+        private Vector3 _newPosition;
+        private Vector3 _startPosition;
+
+        private float _t = 0.0f;
 
         public override void Register(CameraFollowComponent component)
         {
             _player = GameObject.FindObjectOfType<PlayerBrainComponent>();
             _movementComponent = _player.GetComponent<MovementComponent>();
+            _startPosition = component.transform.position;
+            _newPosition = _startPosition;
+                
             component.FixedUpdateAsObservable()
-                .Subscribe(_ => Follow(component));
+                .Subscribe(_ => SetFollowPostion(component))
+                .AddTo(component);
+            
+            component.UpdateAsObservable()
+                .Subscribe(_ => Follow(component))
+                .AddTo(component);
         }
 
         private void Follow(CameraFollowComponent component)
         {
-            Vector3 currentPostion = component.transform.position;
-            Vector3 distance = _movementComponent.transform.position - currentPostion;
-            float velocity = Mathf.Abs(_movementComponent.Velocity.x) > 0.05f ? _movementComponent.Velocity.x : Mathf.Sign(_movementComponent.Velocity.x) * 0.5f;
-            if (Mathf.Abs(distance.x) > 4)
+            _t += Time.deltaTime;
+            component.transform.position = Vector3.Lerp(_startPosition, _newPosition, _t);
+        }
+
+        private void SetFollowPostion(CameraFollowComponent component)
+        {
+            Vector3 currentPosition = component.transform.position;
+            Vector3 distance = _movementComponent.transform.position - currentPosition;
+
+            if (Mathf.Abs(distance.x) > 2.0)
             {
-                Debug.Log(velocity);
-                Vector3 newPostion = component.transform.position;
-                newPostion.x += velocity * Time.deltaTime * 1.4f;
-                component.transform.position = Vector3.Lerp(currentPostion, newPostion, component.lerpFraction);
+                _startPosition = currentPosition;
+                _newPosition = currentPosition;
+                _newPosition.x += distance.x;
+                _t = 0.0f;
             }
         }
     }
