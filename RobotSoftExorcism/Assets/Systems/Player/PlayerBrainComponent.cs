@@ -14,10 +14,18 @@ namespace Systems.Player
         public Vector2 minMovementPosition;
         public float maxRotation;
 
+        // Sway Stuff
         public float criticalSwayFactor;
         public float SwayFactor { get; set; }
         public float SwayPercent { get; set; }
         public RingBuffer<Vector2> VelocityCache { get; } = new RingBuffer<Vector2>(10);
         public Vector2 SwayDirection { get; set; }
+        
+        // Puke Stuff
+        public float pukeIncreaseValue;
+        public float pukeDecreaseValue;
+        public float maxPukeFactor;
+        public float PukeFactor { get; set; }
+        public float PukePercentage { get; set; }
     }
 }
