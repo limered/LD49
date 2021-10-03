@@ -56,23 +56,6 @@ namespace Systems.Player
             }
         }
 
-        private void Fall(PlayerBrainComponent player)
-        {
-            var movement = player.GetComponent<MovementComponent>();
-            movement.Velocity = Vector2.zero;
-            movement.Direction.Value = Vector2.zero;
-            movement.Acceleration = Vector2.zero;
-            
-            Observable.Timer(TimeSpan.FromMilliseconds(StayDownDuration))
-                
-                .DoOnCompleted(() =>
-                {
-                    player.State.GoToState(new PlayerStateNormal());
-                })
-                .Subscribe()
-                .AddTo(player);
-        }
-
         private static void ControlPlayer(PlayerBrainComponent player)
         {
             var movement = player.GetComponent<MovementComponent>();
