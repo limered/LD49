@@ -1,4 +1,8 @@
-﻿using SystemBase.StateMachineBase;
+﻿using System;
+using SystemBase.StateMachineBase;
+using Systems.Movement;
+using UniRx;
+using UnityEngine;
 
 namespace Systems.Player.States
 {
@@ -7,7 +11,22 @@ namespace Systems.Player.States
     {
         public override void Enter(StateContext<PlayerBrainComponent> context)
         {
-            throw new System.NotImplementedException();
+            var movement = context.Owner.GetComponent<MovementComponent>();
+            movement.Velocity = Vector2.zero;
+            movement.Direction.Value = Vector2.zero;
+            movement.Acceleration = Vector2.zero;
+
+            context.Owner.PukeFactor = 0;
+            context.Owner.PukePercentage = 0;
+            
+            context.Owner.pukeParticles.Play();
+            
+            Observable.Timer(TimeSpan.FromMilliseconds(3000))
+                .Subscribe(_ => {
+                    context.Owner.pukeParticles.Stop();
+                    context.GoToState(new PlayerStateNormal());
+                })
+                .AddTo(this);
         }
     }
 }
