@@ -5,7 +5,9 @@ namespace Systems.Ui
 {
     public class UiComponent : GameComponent
     {
-        public Text fallMeterText;
-        public Text pukeMeterText;
+        public Slider fallSlider;
+        public Slider pukeSlider;
+        public Slider crimeSlider;
+        public Slider wayHomeSlider;
     }
 }
