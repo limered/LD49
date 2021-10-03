@@ -59,7 +59,7 @@ namespace Systems.Player
             
             if (player.PukePercentage > 1)
             {
-                // Start Puking
+                MessageBroker.Default.Publish(new PlayerPukeEvent());
             }
         }
 
