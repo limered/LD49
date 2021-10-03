@@ -33,7 +33,9 @@ namespace Systems.Camera
 
         private void Follow(CameraFollowComponent component)
         {
+            Vector3 currentPosition = component.transform.position; 
             component.transform.position = Vector3.Lerp(_startPosition, _newPosition, component.lerpFraction);
+            component.cameraVelocity = currentPosition.x - component.transform.position.x;
         }
 
         private void SetFollowPosition(CameraFollowComponent component)

@@ -15,5 +15,7 @@ namespace Systems.BackgroundTrack
         public float rotation = 0;
         public int pointCount = 30;
         public float speed = 10.0f;
-      }
+        public Vector3 followPosition;
+        public float cameraVelocity = 0.0f;
+    }
 }
