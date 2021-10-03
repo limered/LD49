@@ -1,4 +1,5 @@
 using SystemBase;
+using UnityEngine;
 
 namespace Systems.Camera
 {
@@ -6,5 +7,6 @@ namespace Systems.Camera
     {
         public float followThreshold = 2.0f;
         public float lerpFraction = 0.6f;
+        public float cameraVelocity = 0.0f;
     }
 }

@@ -1,8 +1,11 @@
+using System.Numerics;
 using SystemBase;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using Systems.Camera;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Systems.BackgroundTrack
 {    
@@ -10,8 +13,6 @@ namespace Systems.BackgroundTrack
     public class BackgroundTrackSystem : GameSystem<BackgroundTrackComponent, TrackedObjectComponent>
     {
         private Vector3[] _positions;
-        private int _pointsPerUpdate;
-
         private CameraFollowComponent _cameraFollowComponent;
 
         public override void Register(BackgroundTrackComponent component)
@@ -25,7 +26,15 @@ namespace Systems.BackgroundTrack
                 .AddTo(component);
             
             component.UpdateAsObservable()
-                .Subscribe(_ => ChainToCamera(component))
+                .Subscribe(_ => FollowCamera(component))
+                .AddTo(component);
+            
+            component.UpdateAsObservable()
+                .Subscribe(_ => RotateWithPlayer(component))
+                .AddTo(component);
+            
+            component.FixedUpdateAsObservable()
+                .Subscribe(_ => SetFollowPosition(component))
                 .AddTo(component);
         }
         
@@ -36,23 +45,34 @@ namespace Systems.BackgroundTrack
                 .AddTo(component);
         }
 
-        private void ChainToCamera(BackgroundTrackComponent component)
+        private void RotateWithPlayer(BackgroundTrackComponent component)
         {
-            Vector3 position = component.transform.position; 
-            position.x = _cameraFollowComponent.transform.position.x;
-            component.transform.position = position;
+            component.cameraVelocity = _cameraFollowComponent.cameraVelocity;
+        }
+        
+        private void SetFollowPosition(BackgroundTrackComponent component)
+        {
+            Vector3 currentPosition = component.transform.position;
+            component.followPosition = currentPosition;
+            component.followPosition.x = _cameraFollowComponent.transform.position.x;
+        }
+
+        private void FollowCamera(BackgroundTrackComponent component)
+        {
+            Vector3 currentPosition = component.transform.position;
+            component.transform.position = Vector3.Lerp(currentPosition, component.followPosition, 0.6f);
         }
         
         private void RotateTrack(BackgroundTrackComponent component)
         {
             foreach (var trackedObject in component.trackObjects)
             {
-                trackedObject.speed = component.speed;
-                trackedObject.transform.position = trackedObject.point + trackedObject.orthogonalVector;
+                trackedObject.speed = component.speed * component.cameraVelocity;
+                trackedObject.transform.localPosition = trackedObject.point + trackedObject.orthogonalVector;
 
                 Quaternion q = Quaternion.FromToRotation(Vector3.up, -trackedObject.orthogonalVector);
 
-                trackedObject.transform.rotation = q;
+                trackedObject.transform.localRotation = q;
             }
         }
 
@@ -60,9 +80,13 @@ namespace Systems.BackgroundTrack
         {
             if (_positions.Length >= 2)
             {
-                component.currentPoint += component.speed * Time.deltaTime;
+                component.currentPoint += component.speed;// * Time.deltaTime;
+                Debug.Log(component.currentPoint);
+                if (component.currentPoint < 0)
+                {
+                    component.currentPoint = _positions.Length - 1;
+                }
                 int point = (int) component.currentPoint % (_positions.Length - 1);
-                // component.currentPoint %= ;
                 Vector3 pointA = _positions[point];
                 Vector3 pointB = _positions[point + 1];
                 
