@@ -11,23 +11,19 @@ namespace Systems.Camera
     public class CameraFollowSystem : GameSystem<CameraFollowComponent>
     {
         private PlayerBrainComponent _player;
-
         private MovementComponent _movementComponent;
-        
         private Vector3 _newPosition;
         private Vector3 _startPosition;
 
-        private float _t = 0.0f;
-
         public override void Register(CameraFollowComponent component)
         {
-            _player = GameObject.FindObjectOfType<PlayerBrainComponent>();
+            _player = Object.FindObjectOfType<PlayerBrainComponent>();
             _movementComponent = _player.GetComponent<MovementComponent>();
             _startPosition = component.transform.position;
             _newPosition = _startPosition;
                 
             component.FixedUpdateAsObservable()
-                .Subscribe(_ => SetFollowPostion(component))
+                .Subscribe(_ => SetFollowPosition(component))
                 .AddTo(component);
             
             component.UpdateAsObservable()
@@ -37,21 +33,20 @@ namespace Systems.Camera
 
         private void Follow(CameraFollowComponent component)
         {
-            _t += Time.deltaTime;
-            component.transform.position = Vector3.Lerp(_startPosition, _newPosition, _t);
+            component.transform.position = Vector3.Lerp(_startPosition, _newPosition, component.lerpFraction);
         }
 
-        private void SetFollowPostion(CameraFollowComponent component)
+        private void SetFollowPosition(CameraFollowComponent component)
         {
             Vector3 currentPosition = component.transform.position;
             Vector3 distance = _movementComponent.transform.position - currentPosition;
-
-            if (Mathf.Abs(distance.x) > 2.0)
+            
+            if (Mathf.Abs(distance.x) > component.followThreshold)
             {
                 _startPosition = currentPosition;
                 _newPosition = currentPosition;
-                _newPosition.x += distance.x;
-                _t = 0.0f;
+                _newPosition.x += (Mathf.Abs(distance.x) - Mathf.Abs(component.followThreshold)) *
+                                  Mathf.Sign(distance.x);
             }
         }
     }
