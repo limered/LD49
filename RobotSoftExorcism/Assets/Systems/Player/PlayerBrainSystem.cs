@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using SystemBase;
+using SystemBase.StateMachineBase;
 using Systems.Movement;
 using Systems.Player.Events;
+using Systems.Player.States;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,8 +21,13 @@ namespace Systems.Player
         private const float FallThreshold = 1.5f;
         private const float FallPossibility = 0.8f;
 
+        private IDisposable _fallDisposable;
+
         public override void Register(PlayerBrainComponent component)
         {
+            component.State = new StateContext<PlayerBrainComponent>(component);
+            component.State.Start(new PlayerStateNormal());
+            
             SystemFixedUpdate()
                 .Select(_ => component)
                 .Subscribe(ControlPlayer)
@@ -36,43 +43,40 @@ namespace Systems.Player
                 .Subscribe(_ => SetSwayDirection(component))
                 .AddTo(component);
             
-            // Falling
-            component.currentPlayerState
-                .Where(state => state == PlayerState.Falling)
-                .Select(_ => component)
-                .Subscribe(Fall)
+            SystemUpdate(component)
+                .Subscribe(CheckSpecialActions)
                 .AddTo(component);
         }
 
-        private static void Fall(PlayerBrainComponent player)
+        private void CheckSpecialActions(PlayerBrainComponent player)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                player.State.GoToState(new PlayerStatePoebling());
+            }
+        }
+
+        private void Fall(PlayerBrainComponent player)
         {
             var movement = player.GetComponent<MovementComponent>();
-            PublishCurrentState(player);
             movement.Velocity = Vector2.zero;
             movement.Direction.Value = Vector2.zero;
             movement.Acceleration = Vector2.zero;
             
             Observable.Timer(TimeSpan.FromMilliseconds(StayDownDuration))
-                .Subscribe(_ =>
+                
+                .DoOnCompleted(() =>
                 {
-                    player.currentPlayerState.Value = PlayerState.Normal;
-                    PublishCurrentState(player);
+                    player.State.GoToState(new PlayerStateNormal());
                 })
+                .Subscribe()
                 .AddTo(player);
-        }
-
-        private static void PublishCurrentState(PlayerBrainComponent player)
-        {
-            MessageBroker.Default.Publish(new PlayerStateChangeEvent
-            {
-                PlayerState = player.currentPlayerState.Value
-            });
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
         {
             var movement = player.GetComponent<MovementComponent>();
-            if (player.currentPlayerState.Value == PlayerState.Normal)
+            if (player.State.CurrentState.Value is PlayerStateNormal)
             {
                 SetPlayerMovement(movement);
                 RotatePlayerDependingOfMovement(player, movement);
@@ -81,7 +85,7 @@ namespace Systems.Player
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
             CalculatePukeFactor(player);
-            if (player.currentPlayerState.Value == PlayerState.Falling)
+            if (player.State.CurrentState.Value is PlayerStateFallen)
             {
                 movement.transform.localRotation = Quaternion
                     .Slerp(movement.transform.localRotation,
@@ -106,9 +110,8 @@ namespace Systems.Player
             MessageBroker.Default.Publish(new PlayerPukeUpdateEvent{PukePercent = player.PukePercentage});
 
             if (!(player.PukePercentage > 1)) return;
-            
-            player.currentPlayerState.Value = PlayerState.Puking;
-            PublishCurrentState(player);
+
+            player.State.GoToState(new PlayerStatePuking());
         }
 
         private static void CalculateSway(PlayerBrainComponent player)
@@ -137,9 +140,8 @@ namespace Systems.Player
             movement.transform.rotation *= newRotation;
             movement.Direction.Value += player.SwayDirection * player.SwayPercent;
             if (player.SwayPercent <= FallThreshold || Random.value > FallPossibility) return;
-            
-            player.currentPlayerState.Value = PlayerState.Falling;
-            
+
+            player.State.GoToState(new PlayerStateFallen());
         }
 
         private static void RotatePlayerDependingOfMovement(PlayerBrainComponent player, MovementComponent movement)
