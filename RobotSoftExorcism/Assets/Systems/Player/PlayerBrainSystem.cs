@@ -9,19 +9,12 @@ using Random = UnityEngine.Random;
 
 namespace Systems.Player
 {
-    public enum PlayerState
-    {
-        Normal,
-        Falling,
-        Puking,
-    }
-    
     [GameSystem]
     public class PlayerBrainSystem : GameSystem<PlayerBrainComponent>
     {
         private const int CalculateSwayTime = 100;
         private const int SwayDirectionChangeTime = 500;
-        private const int StayDownDuration = 3000;
+        private const int StayDownDuration = 2000;
         private const float PukeIncreaseThreshold = 0.7f;
         private const float FallThreshold = 1.5f;
         private const float FallPossibility = 0.8f;
@@ -44,7 +37,7 @@ namespace Systems.Player
                 .AddTo(component);
             
             // Falling
-            component.CurrentPlayerState
+            component.currentPlayerState
                 .Where(state => state == PlayerState.Falling)
                 .Select(_ => component)
                 .Subscribe(Fall)
@@ -53,17 +46,33 @@ namespace Systems.Player
 
         private static void Fall(PlayerBrainComponent player)
         {
-            // Show Fall Animation
+            var movement = player.GetComponent<MovementComponent>();
+            PublishCurrentState(player);
+            movement.Velocity = Vector2.zero;
+            movement.Direction.Value = Vector2.zero;
+            movement.Acceleration = Vector2.zero;
             
             Observable.Timer(TimeSpan.FromMilliseconds(StayDownDuration))
-                .Subscribe(_ => player.CurrentPlayerState.Value = PlayerState.Normal)
+                .Subscribe(_ =>
+                {
+                    player.currentPlayerState.Value = PlayerState.Normal;
+                    PublishCurrentState(player);
+                })
                 .AddTo(player);
+        }
+
+        private static void PublishCurrentState(PlayerBrainComponent player)
+        {
+            MessageBroker.Default.Publish(new PlayerStateChangeEvent
+            {
+                PlayerState = player.currentPlayerState.Value
+            });
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
         {
             var movement = player.GetComponent<MovementComponent>();
-            if (player.CurrentPlayerState.Value == PlayerState.Normal)
+            if (player.currentPlayerState.Value == PlayerState.Normal)
             {
                 SetPlayerMovement(movement);
                 RotatePlayerDependingOfMovement(player, movement);
@@ -71,8 +80,8 @@ namespace Systems.Player
             }
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
-            CalculatePukeFactor(player, movement);
-            if (player.CurrentPlayerState.Value == PlayerState.Falling)
+            CalculatePukeFactor(player);
+            if (player.currentPlayerState.Value == PlayerState.Falling)
             {
                 movement.transform.localRotation = Quaternion
                     .Slerp(movement.transform.localRotation,
@@ -80,7 +89,7 @@ namespace Systems.Player
             }
         }
 
-        private static void CalculatePukeFactor(PlayerBrainComponent player, MovementComponent movement)
+        private static void CalculatePukeFactor(PlayerBrainComponent player)
         {
             if (player.SwayPercent > PukeIncreaseThreshold)
             {
@@ -95,11 +104,11 @@ namespace Systems.Player
 
             player.PukePercentage = player.PukeFactor / player.maxPukeFactor;
             MessageBroker.Default.Publish(new PlayerPukeUpdateEvent{PukePercent = player.PukePercentage});
+
+            if (!(player.PukePercentage > 1)) return;
             
-            if (player.PukePercentage > 1)
-            {
-                MessageBroker.Default.Publish(new PlayerPukeEvent());
-            }
+            player.currentPlayerState.Value = PlayerState.Puking;
+            PublishCurrentState(player);
         }
 
         private static void CalculateSway(PlayerBrainComponent player)
@@ -129,11 +138,8 @@ namespace Systems.Player
             movement.Direction.Value += player.SwayDirection * player.SwayPercent;
             if (player.SwayPercent <= FallThreshold || Random.value > FallPossibility) return;
             
-            MessageBroker.Default.Publish(new PlayerFallEvent());
-            player.CurrentPlayerState.Value = PlayerState.Falling;
-            movement.Velocity = Vector2.zero;
-            movement.Direction.Value = Vector2.zero;
-            movement.Acceleration = Vector2.zero;
+            player.currentPlayerState.Value = PlayerState.Falling;
+            
         }
 
         private static void RotatePlayerDependingOfMovement(PlayerBrainComponent player, MovementComponent movement)

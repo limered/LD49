@@ -15,11 +15,10 @@ namespace Systems.Player
         public Vector2 minMovementPosition;
         public float maxRotation;
 
-        public ReactiveProperty<PlayerState> CurrentPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Normal);
+        public ReactiveProperty<PlayerState> currentPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Normal);
 
         // Sway Stuff
         public float criticalSwayFactor;
-        public float SwayFactor { get; set; }
         public float SwayPercent { get; set; }
         public RingBuffer<Vector2> VelocityCache { get; } = new RingBuffer<Vector2>(10);
         public Vector2 SwayDirection { get; set; }
