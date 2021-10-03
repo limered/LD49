@@ -9,9 +9,9 @@ namespace Systems.Environment
     {
         public override void Register(KickableComponent component)
         {
-            component.HasBeenKickedTrigger
-                .Subscribe(_ => Debug.Log("Poebeled"))
-                .AddTo(component);
+            // component.HasBeenKickedTrigger
+            //     .Subscribe(_ => Debug.Log("Poebeled"))
+            //     .AddTo(component);
         }
     }
 }
