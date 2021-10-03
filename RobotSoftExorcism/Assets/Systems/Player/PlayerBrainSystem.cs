@@ -63,6 +63,7 @@ namespace Systems.Player
                 SetPlayerMovement(movement);
                 RotatePlayerDependingOfMovement(player, movement);
                 ApplySway(player, movement);
+                MoveRandomlyIfIdle(player, movement);
             }
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
@@ -72,6 +73,14 @@ namespace Systems.Player
                 movement.transform.localRotation = Quaternion
                     .Slerp(movement.transform.localRotation,
                         Quaternion.AngleAxis(70, Vector3.right), 0.5f);
+            }
+        }
+
+        private static void MoveRandomlyIfIdle(PlayerBrainComponent player, MovementComponent movement)
+        {
+            if (movement.Direction.Value.magnitude < 0.01)
+            {
+                movement.Direction.Value = Random.insideUnitCircle * 3;
             }
         }
 
