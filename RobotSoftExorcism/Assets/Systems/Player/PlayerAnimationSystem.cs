@@ -1,7 +1,9 @@
 ﻿using System;
 using SystemBase;
+using SystemBase.StateMachineBase;
 using Systems.Animation;
 using Systems.Player.Events;
+using Systems.Player.States;
 using UniRx;
 
 namespace Systems.Player
@@ -20,33 +22,29 @@ namespace Systems.Player
     {
         public override void Register(PlayerBrainComponent component)
         {
-            MessageBroker.Default.Receive<PlayerStateChangeEvent>()
-                .Select(ev => (component.GetComponents<BasicToggleAnimationComponent>(), ev.PlayerState))
+            component.State.CurrentState
+                .Select(state => (component.GetComponents<BasicToggleAnimationComponent>(), state))
                 .Subscribe(AnimatePlayer)
                 .AddTo(component);
         }
 
-        private static void AnimatePlayer((BasicToggleAnimationComponent[] PlayerAnimators, PlayerState PlayerState) t)
+        private static void AnimatePlayer((BasicToggleAnimationComponent[] PlayerAnimators, BaseState<PlayerBrainComponent> PlayerState) t)
         {
             var (playerAnimators, playerState) = t;
             switch (playerState)
             {
-                case PlayerState.Normal:
+                case PlayerStateNormal _:
                     Array.ForEach(
                         playerAnimators,
                         component =>
                             component.SetSpriteWithoutAnimation((int)AnimationIndex.Normal));
                     break;
-                case PlayerState.Falling:
+                case PlayerStateFallen _:
                     Array.ForEach(
                         playerAnimators,
                         component =>
                             component.SetSpriteWithoutAnimation((int)AnimationIndex.Fall));
                     break;
-                case PlayerState.Puking:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }

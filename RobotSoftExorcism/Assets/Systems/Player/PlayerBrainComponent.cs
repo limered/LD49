@@ -1,6 +1,6 @@
 ﻿using SystemBase;
+using SystemBase.StateMachineBase;
 using Systems.Movement;
-using UniRx;
 using UnityEngine;
 using Utils.Data;
 
@@ -15,7 +15,7 @@ namespace Systems.Player
         public Vector2 minMovementPosition;
         public float maxRotation;
 
-        public ReactiveProperty<PlayerState> currentPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Normal);
+        public StateContext<PlayerBrainComponent> State;
 
         // Sway Stuff
         public float criticalSwayFactor;
@@ -29,5 +29,8 @@ namespace Systems.Player
         public float maxPukeFactor;
         public float PukeFactor { get; set; }
         public float PukePercentage { get; set; }
+
+
+        public float fallenDuration = 2000;
     }
 }

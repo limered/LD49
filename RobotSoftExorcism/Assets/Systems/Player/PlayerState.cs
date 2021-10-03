@@ -5,5 +5,6 @@
         Normal,
         Falling,
         Puking,
+        Poebeling,
     }
 }
