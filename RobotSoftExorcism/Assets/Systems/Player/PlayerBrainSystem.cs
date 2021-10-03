@@ -43,14 +43,23 @@ namespace Systems.Player
 
         private static void CalculatePukeFactor(PlayerBrainComponent player, MovementComponent movement)
         {
-            if (player.SwayPercent > 1)
+            if (player.SwayPercent > 0.7f)
             {
-                // Increase Puke
-                
+                player.PukeFactor += player.pukeIncreaseValue * Time.fixedDeltaTime * player.SwayPercent;
+                player.PukeFactor = player.PukeFactor > player.maxPukeFactor ? player.maxPukeFactor : player.PukeFactor;
             }
             else
             {
-                //decrease Puke
+                player.PukeFactor -= player.pukeDecreaseValue * Time.fixedDeltaTime;
+                player.PukeFactor = player.PukeFactor < 0 ? 0 : player.PukeFactor;
+            }
+
+            player.PukePercentage = player.PukeFactor / player.maxPukeFactor;
+            MessageBroker.Default.Publish(new PlayerPukeUpdateEvent{PukePercent = player.PukePercentage});
+            
+            if (player.PukePercentage > 1)
+            {
+                // Start Puking
             }
         }
 
@@ -74,7 +83,7 @@ namespace Systems.Player
         private static void ApplySway(PlayerBrainComponent player, MovementComponent movement)
         {
             var newRotation =
-                Quaternion.AngleAxis(player.maxRotation * Math.Min(player.SwayPercent, 1.0f),
+                Quaternion.AngleAxis(player.maxRotation * Math.Min(player.SwayPercent, 0.5f),
                     movement.Velocity.x < 0 ? Vector3.forward : Vector3.back);
             movement.transform.rotation *= newRotation;
             movement.Direction.Value += player.SwayDirection * player.SwayPercent;  
