@@ -9,6 +9,13 @@ using Random = UnityEngine.Random;
 
 namespace Systems.Player
 {
+    public enum PlayerState
+    {
+        Normal,
+        Falling,
+        Puking,
+    }
+    
     [GameSystem]
     public class PlayerBrainSystem : GameSystem<PlayerBrainComponent>
     {
@@ -28,17 +35,38 @@ namespace Systems.Player
                 .Sample(TimeSpan.FromMilliseconds(500))
                 .Subscribe(_ => SetSwayDirection(component))
                 .AddTo(component);
+            
+            // Falling
+            component.CurrentPlayerState
+                .Where(state => state == PlayerState.Falling)
+                .Select(_ => component)
+                .Subscribe(Fall)
+                .AddTo(component);
+        }
+
+        private static void Fall(PlayerBrainComponent player)
+        {
+            Observable.Timer(TimeSpan.FromMilliseconds(3000))
+                .Subscribe(_ => player.CurrentPlayerState.Value = PlayerState.Normal)
+                .AddTo(player);
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
         {
             var movement = player.GetComponent<MovementComponent>();
-            SetPlayerMovement(movement);
+            if (player.CurrentPlayerState.Value == PlayerState.Normal)
+            {
+                SetPlayerMovement(movement);
+                RotatePlayerDependingOfMovement(player, movement);
+                ApplySway(player, movement);
+            }
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
-            RotatePlayerDependingOfMovement(player, movement);
-            ApplySway(player, movement);
             CalculatePukeFactor(player, movement);
+            if (player.CurrentPlayerState.Value == PlayerState.Falling)
+            {
+                movement.transform.localRotation = Quaternion.AngleAxis(70, Vector3.right);
+            }
         }
 
         private static void CalculatePukeFactor(PlayerBrainComponent player, MovementComponent movement)
@@ -46,12 +74,12 @@ namespace Systems.Player
             if (player.SwayPercent > 0.7f)
             {
                 player.PukeFactor += player.pukeIncreaseValue * Time.fixedDeltaTime * player.SwayPercent;
-                player.PukeFactor = player.PukeFactor > player.maxPukeFactor ? player.maxPukeFactor : player.PukeFactor;
+                player.PukeFactor = Math.Min(player.PukeFactor, player.maxPukeFactor);
             }
             else
             {
                 player.PukeFactor -= player.pukeDecreaseValue * Time.fixedDeltaTime;
-                player.PukeFactor = player.PukeFactor < 0 ? 0 : player.PukeFactor;
+                player.PukeFactor = Math.Max(player.PukeFactor, 0);
             }
 
             player.PukePercentage = player.PukeFactor / player.maxPukeFactor;
@@ -83,14 +111,18 @@ namespace Systems.Player
         private static void ApplySway(PlayerBrainComponent player, MovementComponent movement)
         {
             var newRotation =
-                Quaternion.AngleAxis(player.maxRotation * Math.Min(player.SwayPercent, 0.5f),
+                Quaternion.AngleAxis(player.maxRotation * Math.Min(player.SwayPercent, 0.3f),
                     movement.Velocity.x < 0 ? Vector3.forward : Vector3.back);
+            
             movement.transform.rotation *= newRotation;
-            movement.Direction.Value += player.SwayDirection * player.SwayPercent;  
-            if (player.SwayPercent > 1.0f)
-            {
-                MessageBroker.Default.Publish(new PlayerFallEvent());
-            }
+            movement.Direction.Value += player.SwayDirection * player.SwayPercent;
+            if (player.SwayPercent <= 1.5f || Random.value < 0.2f) return;
+            
+            MessageBroker.Default.Publish(new PlayerFallEvent());
+            player.CurrentPlayerState.Value = PlayerState.Falling;
+            movement.Velocity = Vector2.zero;
+            movement.Direction.Value = Vector2.zero;
+            movement.Acceleration = Vector2.zero;
         }
 
         private static void RotatePlayerDependingOfMovement(PlayerBrainComponent player, MovementComponent movement)
