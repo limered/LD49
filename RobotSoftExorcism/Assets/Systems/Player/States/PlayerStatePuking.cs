@@ -1,7 +1,9 @@
 ﻿using System;
+using StrongSystems.Audio;
 using SystemBase.StateMachineBase;
 using Systems.Movement;
 using Systems.Player.Events;
+using Systems.SoundManagement;
 using UniRx;
 using UnityEngine;
 
@@ -12,6 +14,8 @@ namespace Systems.Player.States
     {
         public override void Enter(StateContext<PlayerBrainComponent> context)
         {
+            SoundSystem.RodPuke.PlayRandom();
+            
             var movement = context.Owner.GetComponent<MovementComponent>();
             movement.Velocity = Vector2.zero;
             movement.Direction.Value = Vector2.zero;

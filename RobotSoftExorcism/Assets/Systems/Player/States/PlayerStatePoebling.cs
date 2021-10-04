@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Assets.Utils.Math;
+using StrongSystems.Audio;
 using SystemBase.StateMachineBase;
 using Systems.Environment;
 using Systems.Player.Events;
+using Systems.SoundManagement;
 using UniRx;
 using Object = UnityEngine.Object;
 
@@ -14,6 +16,8 @@ namespace Systems.Player.States
     {
         public override void Enter(StateContext<PlayerBrainComponent> context)
         {
+            SoundSystem.RodPoebel.PlayRandom();
+            
             var poebelElementsInVicinity = Object.FindObjectsOfType<PoebelComponent>()
                 .Where(po =>
                     context.Owner.transform.position.DistanceTo(po.transform.position) < context.Owner.poebelRange)

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Assets.Utils.Math;
+using StrongSystems.Audio;
 using SystemBase.StateMachineBase;
 using Systems.Environment;
 using Systems.Player.Events;
+using Systems.SoundManagement;
 using UniRx;
 using UnityEngine;
 using Object = UnityEngine.Object;
