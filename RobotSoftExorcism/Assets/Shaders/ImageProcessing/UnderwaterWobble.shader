@@ -48,7 +48,7 @@
 				uv.y += sin(X - Y)*0.005*sin(Y);
 				fixed4 col = tex2D(_MainTex, uv);
 
-				col *= float4(0.6f, 0.6f, 0.8f, 0.7f);
+				col *= float4(0.7f, 0.7f, 0.9f, 0.9f);
 
                 return col;
             }
