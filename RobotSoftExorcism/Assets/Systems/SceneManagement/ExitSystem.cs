@@ -22,7 +22,6 @@ public class ExitSystem : GameSystem<ExitComponent>
     {
         if (collider.GetComponent<PlayerBrainComponent>())
         {
-            Debug.Log("hit exit");
             var coffeeCount = IoC.Game.GetComponent<ScoreComponent>().coffeeCount.Value;
             MessageBroker.Default.Publish(new PlayerEnterExitEvent());
         }
