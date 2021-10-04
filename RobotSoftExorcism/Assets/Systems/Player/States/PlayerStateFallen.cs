@@ -13,12 +13,10 @@ namespace Systems.Player.States
         public override void Enter(StateContext<PlayerBrainComponent> context)
         {
             var movement = context.Owner.GetComponent<MovementComponent>();
-            movement.Velocity = Vector2.zero;
-            movement.Direction.Value = Vector2.zero;
-            movement.Acceleration = Vector2.zero;
+            movement.Stop();
+            movement.Friction = context.Owner.stopFriction;
             
             var stopTimer = Observable.Timer(TimeSpan.FromMilliseconds(context.Owner.fallenDuration));
-            
             context.Owner.UpdateAsObservable()
                 .TakeUntil(stopTimer)
                 .Where(_ => Input.GetKeyDown(KeyCode.K))

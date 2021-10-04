@@ -62,8 +62,8 @@ namespace Systems.Player
             {
                 SetPlayerMovement(movement);
                 RotatePlayerDependingOfMovement(player, movement);
+                MoveRandomlyIfIdle(movement);
                 ApplySway(player, movement);
-                MoveRandomlyIfIdle(player, movement);
             }
             StopPlayerIfItIsNotMoving(player, movement);
             StopPlayerOnBoundary(player, movement);
@@ -76,11 +76,11 @@ namespace Systems.Player
             }
         }
 
-        private static void MoveRandomlyIfIdle(PlayerBrainComponent player, MovementComponent movement)
+        private static void MoveRandomlyIfIdle(MovementComponent movement)
         {
             if (movement.Direction.Value.magnitude < 0.01)
             {
-                movement.Direction.Value = Random.insideUnitCircle * 3;
+                movement.Direction.Value = Random.insideUnitCircle;
             }
         }
 
