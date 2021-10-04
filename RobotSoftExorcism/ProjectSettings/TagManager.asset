@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Kickable
+    uniqueID: 1664452575
+    locked: 0
   - name: Player
     uniqueID: 1841579551
     locked: 0
