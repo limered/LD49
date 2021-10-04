@@ -2,6 +2,7 @@
 using Systems.Player.Events;
 using Systems.Score;
 using UniRx;
+using Utils;
 using Utils.Plugins;
 
 namespace Systems.Ui
@@ -22,6 +23,8 @@ namespace Systems.Ui
             MessageBroker.Default.Receive<PlayerPukeUpdateEvent>()
                 .Subscribe(e => component.pukeSlider.value = e.PukePercent)
                 .AddTo(component);
+
+            
         }
 
         public override void Register(ScoreComponent component)
