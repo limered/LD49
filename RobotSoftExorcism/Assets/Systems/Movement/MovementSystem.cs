@@ -58,6 +58,9 @@ namespace Systems.Movement
             {
                 component.Velocity = component.Velocity.normalized * component.MaxSpeed;
             }
+            
+            component.Velocity += component.Force * Time.fixedDeltaTime;
+            component.Force = Vector2.zero;
         }
 
         private static void ApplyFriction(MovementComponent component)
