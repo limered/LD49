@@ -47,6 +47,7 @@ namespace Systems.Score
             var pos = playerBrainComponent.transform.position;
             police.transform.position = new Vector3(pos.x + 10, -2.5f, 0);
             IoC.Game.GetComponent<ScoreComponent>().crime.Value = 0;
+            IoC.Game.GetComponent<ScoreComponent>().finishedGame = true;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Systems.Ui
     {
         public void GoToNextScene()
         {
-            var crimeValue = IoC.Game.GetComponent<ScoreComponent>().crime.Value;
-            if (crimeValue >= 100)
+            var finishedGame = IoC.Game.GetComponent<ScoreComponent>().finishedGame;
+            if (finishedGame)
             {
                 GoToSadEnd();
                 return;
@@ -76,6 +76,7 @@ namespace Systems.Ui
         private void ResetCrime()
         {
             IoC.Game.GetComponent<ScoreComponent>().crime.Value = 0;
+            IoC.Game.GetComponent<ScoreComponent>().finishedGame = false;
         }
     }
 }
