@@ -67,6 +67,7 @@ MonoBehaviour:
   coffeeCount:
     value: 0
   police: {fileID: 3083410621265212503, guid: d2ef961de8370fc4484a07385ce7f9d1, type: 3}
+  finishedGame: 0
 --- !u!82 &161650089
 AudioSource:
   m_ObjectHideFlags: 0
