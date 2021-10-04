@@ -1,6 +1,8 @@
 ﻿using System;
+using StrongSystems.Audio;
 using SystemBase.StateMachineBase;
 using Systems.Movement;
+using Systems.SoundManagement;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -12,6 +14,8 @@ namespace Systems.Player.States
     {
         public override void Enter(StateContext<PlayerBrainComponent> context)
         {
+            SoundSystem.RodFalling.PlayRandom();
+            
             var movement = context.Owner.GetComponent<MovementComponent>();
             movement.Stop();
             movement.Friction = context.Owner.stopFriction;

@@ -16,13 +16,13 @@ namespace Systems.SoundManagement
     [GameSystem]
     public class SoundSystem : GameSystem<SoundComponent>
     {
-        private string[] RodPuke = new[] { "puke_1", "puke_2", "puke_3", "puke_4", "puke_5" };
-        private string[] RodKick = new[] { "kicked_1", "kicked_2", "kicked_3", "kicked_4", "kicked_5", "kicked_6" };
-        private string[] RodPolice = new[] { "police_1", "police_2" };
-        private string[] RodDrink = new[] { "drink_1", "drink_2" };
-        private string[] RodFalling = new[] { "fall_1", "fall_2", "fall_3" };
-        private string[] RodPoebel = new[] { "poeble_1","poeble_2","poeble_3","poeble_4","poeble_5","poeble_6" };
-        private string[] Police = new[] { "police_3", "police_4" };
+        public static readonly string[] RodPuke = new[] { "puke_1", "puke_2", "puke_3", "puke_4", "puke_5" };
+        public static readonly string[] RodKick = new[] { /*"kicked_1",*/ "kicked_2", /*"kicked_3",*/ "kicked_4", "kicked_5", /*"kicked_6"*/ };
+        public static readonly string[] RodPolice = new[] { "police_1", "police_2" };
+        public static readonly string[] RodDrink = new[] { "drink_1", "drink_2" };
+        public static readonly string[] RodFalling = new[] { "fall_1", "fall_2", "fall_3" };
+        public static readonly string[] RodPoebel = new[] { "poeble_1","poeble_2","poeble_3","poeble_4","poeble_5","poeble_6" };
+        public static readonly string[] Police = new[] { "police_3", "police_4" };
         
         private string[] PukeReaction = new []{ "did_he_female", "gross_female", "shame_female"};
         private string[] KickReaction = new[] { "looks_unstable_male", "police_female", "shame_female", "stop_him_female", "stop_male"};
@@ -52,28 +52,35 @@ namespace Systems.SoundManagement
                 .AddTo(component);
             
             //Sounds
-            MessageBroker.Default.Receive<PlayerStateChangeEvent>()
-                .Subscribe(e => PlayRodriguesSound(e.PlayerState))
-                .AddTo(component);
+            // MessageBroker.Default.Receive<PlayerStateChangeEvent>()
+            //     .Subscribe(e => PlayRodriguesSound(e.PlayerState))
+            //     .AddTo(component);
             
             MessageBroker.Default.Receive<PlayerCaughtByPoliceEvent>()
-            .Subscribe(e => RodPolice[Random.Range(0, RodPolice.Length-1)].Play())
+            .Subscribe(e => RodPolice.PlayRandom())
             .AddTo(component);
             
             MessageBroker.Default.Receive<PlayerDrinkEvent>()
-                .Subscribe(e => RodDrink[Random.Range(0, RodDrink.Length-1)].Play())
+                .Subscribe(e => RodDrink.PlayRandom())
                 .AddTo(component);
             
             MessageBroker.Default.Receive<PlayerKickEvent>()
-                .Subscribe(e => PlayKickReaction())
+                .Subscribe(e =>
+                {
+                    PlayKickReaction();
+                    RodKick.PlayRandom();
+                })
                 .AddTo(component);
             
             MessageBroker.Default.Receive<PlayerPoebelEvent>()
-                .Subscribe(e => PoebelReaction[Random.Range(0, PoebelReaction.Length-1)].Play())
+                .Subscribe(e =>
+                {
+                    PoebelReaction.PlayRandom();
+                })
                 .AddTo(component);
             
             MessageBroker.Default.Receive<PlayerPukeEvent>()
-                .Subscribe(e => PukeReaction[Random.Range(0, PukeReaction.Length-1)].Play())
+                .Subscribe(e => PukeReaction.PlayRandom())
                 .AddTo(component);
 
             Observable.Interval(TimeSpan.FromMilliseconds(8000))
@@ -99,20 +106,20 @@ namespace Systems.SoundManagement
             audioSource.Play();
         }
 
-        private void PlayRodriguesSound(PlayerState playerState)
-        {
-            if (playerState == PlayerState.Puking)
-            {
-                RodPuke[Random.Range(0, RodPuke.Length - 1)].Play();
-            } else if (playerState == PlayerState.Falling)
-            {
-                RodFalling[Random.Range(0, RodFalling.Length-1)].Play();
-                GeneralReaction[Random.Range(0, GeneralReaction.Length - 1)].Play();
-            } else if (playerState == PlayerState.Poebeling)
-            {
-                RodPoebel[Random.Range(0, RodPoebel.Length - 1)].Play();
-            }
-        }
+        // private void PlayRodriguesSound(PlayerState playerState)
+        // {
+        //     if (playerState == PlayerState.Puking)
+        //     {
+        //         RodPuke.PlayRandom();
+        //     } else if (playerState == PlayerState.Falling)
+        //     {
+        //         RodFalling[Random.Range(0, RodFalling.Length-1)].Play();
+        //         GeneralReaction[Random.Range(0, GeneralReaction.Length - 1)].Play();
+        //     } else if (playerState == PlayerState.Poebeling)
+        //     {
+        //         RodPoebel[Random.Range(0, RodPoebel.Length - 1)].Play();
+        //     }
+        // }
 
         private void RodWasCaught()
         {
