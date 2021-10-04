@@ -22,16 +22,16 @@ namespace Systems.BackgroundTrack
         
         public Vector3[] positions;
 
-        private void OnDrawGizmos()
-        {
-            BackgroundTrackSystem system = new BackgroundTrackSystem();
-            positions = system.CreateEllipse(width, height, centerX, centerY, rotation, pointCount);
-            Vector3 currentPoint = positions[0];
-            for (int i = 1; i < positions.Length; i++)
-            {
-                Gizmos.DrawLine(currentPoint, positions[i]);
-                currentPoint = positions[i];
-            }
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     BackgroundTrackSystem system = new BackgroundTrackSystem();
+        //     positions = system.CreateEllipse(width, height, centerX, centerY, rotation, pointCount);
+        //     Vector3 currentPoint = positions[0];
+        //     for (int i = 1; i < positions.Length; i++)
+        //     {
+        //         Gizmos.DrawLine(currentPoint, positions[i]);
+        //         currentPoint = positions[i];
+        //     }
+        // }
     }
 }
