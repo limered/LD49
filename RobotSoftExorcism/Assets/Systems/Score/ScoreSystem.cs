@@ -3,6 +3,7 @@ using Systems.Player;
 using Systems.Player.Events;
 using UniRx;
 using UnityEngine;
+using Utils;
 
 namespace Systems.Score
 {
@@ -45,6 +46,7 @@ namespace Systems.Score
             var playerBrainComponent = GameObject.FindObjectOfType<PlayerBrainComponent>();
             var pos = playerBrainComponent.transform.position;
             police.transform.position = new Vector3(pos.x + 10, -2.5f, 0);
+            IoC.Game.GetComponent<ScoreComponent>().crime.Value = 0;
         }
     }
 }
