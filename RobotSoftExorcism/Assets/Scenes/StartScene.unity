@@ -187,6 +187,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1687561212863160254, guid: 7f436b1451893424d996f3220f578581, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2653723630255320134, guid: 7f436b1451893424d996f3220f578581, type: 3}
       propertyPath: m_Name
       value: MainCameraWithoutGame
