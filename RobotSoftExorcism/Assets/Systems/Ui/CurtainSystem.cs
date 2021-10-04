@@ -23,10 +23,5 @@ namespace Systems.Ui
         {
             component.GetComponent<Animator>().Play("close_curtain");
         }
-
-        private void GoToPrison(CurtainComponent component)
-        {
-            component.GoToSadEnd();
-        }
     }
 }

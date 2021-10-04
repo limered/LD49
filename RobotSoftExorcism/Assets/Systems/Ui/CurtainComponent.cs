@@ -1,5 +1,7 @@
 using SystemBase;
+using Systems.Score;
 using UnityEngine.SceneManagement;
+using Utils;
 
 namespace Systems.Ui
 {
@@ -44,7 +46,8 @@ namespace Systems.Ui
 
         private void ShowEnd()
         {
-            if (true)
+            var curtain = IoC.Game.GetComponent<ScoreComponent>().crime.Value;
+            if (curtain < 100)
             {
                 GoToHappyEnd();
             }
