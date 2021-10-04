@@ -13,7 +13,7 @@ namespace Systems.Ui
                 case "BarScene":
                     GoOutside();
                     break;
-                case "StreetScene":
+                case "CityScene":
                     ShowEnd();
                     break;
                 case "StartScene":
@@ -39,7 +39,7 @@ namespace Systems.Ui
 
         private void GoOutside()
         {
-            SceneManager.LoadScene("StreetScene");
+            SceneManager.LoadScene("CityScene");
         }
 
         private void ShowEnd()
