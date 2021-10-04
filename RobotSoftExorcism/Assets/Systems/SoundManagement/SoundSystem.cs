@@ -52,9 +52,9 @@ namespace Systems.SoundManagement
             //     .Subscribe(e => "drink".Play())
             //     .AddTo(component);
             //
-            // MessageBroker.Default.Receive<PlayerKickEvent>()
-            //     .Subscribe(e => "kick".Play())
-            //     .AddTo(component);
+            MessageBroker.Default.Receive<PlayerKickEvent>()
+                .Subscribe(e => PlayKickReaction())
+                .AddTo(component);
             
             MessageBroker.Default.Receive<PlayerTalksToBarkeeper>()
                 .Subscribe(e => BarkeeperTalks())
@@ -113,8 +113,7 @@ namespace Systems.SoundManagement
         private void PlayKickReaction()
         {
             "kick".Play();
-            //TODO Helen if(hit)
-            // KickReaction[Random.Range(0, KickReaction.Length - 1)].Play();
+            KickReaction[Random.Range(0, KickReaction.Length - 1)].Play();
         }
     }
 }
