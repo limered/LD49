@@ -9,6 +9,6 @@ namespace Systems.Score
         public IntReactiveProperty crime = new IntReactiveProperty(0);
         public IntReactiveProperty coffeeCount = new IntReactiveProperty(0);
         public GameObject police;
-        public bool finishedGame;
+        public bool finishedGame = false;
     }
 }
