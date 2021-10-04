@@ -9,6 +9,13 @@ namespace Systems.Ui
     {
         public void GoToNextScene()
         {
+            var crimeValue = IoC.Game.GetComponent<ScoreComponent>().crime.Value;
+            if (crimeValue >= 100)
+            {
+                GoToSadEnd();
+                return;
+            }
+
             var currentScene = SceneManager.GetActiveScene().name;
             switch (currentScene)
             {
@@ -16,7 +23,7 @@ namespace Systems.Ui
                     GoOutside();
                     break;
                 case "CityScene":
-                    ShowEnd();
+                    GoToHappyEnd();
                     break;
                 case "StartScene":
                 case "HappyEnd":
@@ -31,6 +38,7 @@ namespace Systems.Ui
 
         private void ShowStart()
         {
+            ResetCrime();
             SceneManager.LoadScene("StartScene");
         }
         
@@ -44,27 +52,21 @@ namespace Systems.Ui
             SceneManager.LoadScene("CityScene");
         }
 
-        private void ShowEnd()
-        {
-            var curtain = IoC.Game.GetComponent<ScoreComponent>().crime.Value;
-            if (curtain < 100)
-            {
-                GoToHappyEnd();
-            }
-            else
-            {
-                GoToSadEnd();
-            }
-        }
-
         private void GoToHappyEnd()
         {
+            ResetCrime();
             SceneManager.LoadScene("HappyEnd");
         }
 
         public void GoToSadEnd()
         {
+            ResetCrime();
             SceneManager.LoadScene("SadEnd");
+        }
+
+        private void ResetCrime()
+        {
+            IoC.Game.GetComponent<ScoreComponent>().crime.Value = 0;
         }
     }
 }

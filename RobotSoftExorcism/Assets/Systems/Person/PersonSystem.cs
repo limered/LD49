@@ -3,6 +3,7 @@ using Assets.Utils.Math;
 using SystemBase;
 using Systems.Movement;
 using Systems.Player;
+using Systems.Player.Events;
 using UniRx;
 using UnityEngine;
 using Utils.Plugins;
@@ -41,6 +42,11 @@ namespace Systems.Person
                             personMovement.Direction.Value =
                                 (_player.Value.transform.position - person.transform.position).normalized;
                         }
+
+                        if (person.personType == PersonType.Police)
+                        {
+                            MovePolice(personMovement, person);
+                        }
                         break;
                     case PersonMovePattern.Block:
                         if (_player.Value.transform.position.DistanceTo(person.transform.position) < 5)
@@ -56,7 +62,21 @@ namespace Systems.Person
             }
             else
             {
-                personMovement.Direction.Value = Vector2.zero;
+                if (person.personType == PersonType.Normal)
+                {
+                    personMovement.Direction.Value = Vector2.zero;
+                }
+            }
+        }
+
+        private void MovePolice(MovementComponent personMovement, PersonComponent person)
+        {
+            personMovement.Direction.Value =
+                (_player.Value.transform.position - person.transform.position).normalized;
+
+            if (_player.Value.transform.position.DistanceTo(person.transform.position) < 5)
+            {
+                MessageBroker.Default.Publish(new PlayerCaughtByPoliceEvent());
             }
         }
 
