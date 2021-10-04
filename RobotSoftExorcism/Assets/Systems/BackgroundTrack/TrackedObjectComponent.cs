@@ -28,10 +28,10 @@ namespace Systems.BackgroundTrack
             return index;
         }
         
-        private void OnDrawGizmos()
-        {
-            BackgroundTrackComponent comp = GetComponentInParent<BackgroundTrackComponent>();
-            Gizmos.DrawLine(comp.positions[(int) currentPoint], transform.localPosition);
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     BackgroundTrackComponent comp = GetComponentInParent<BackgroundTrackComponent>();
+        //     Gizmos.DrawLine(comp.positions[(int) currentPoint], transform.localPosition);
+        // }
     }
 }

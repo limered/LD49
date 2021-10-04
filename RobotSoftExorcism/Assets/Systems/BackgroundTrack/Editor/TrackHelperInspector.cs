@@ -24,7 +24,7 @@ namespace Systems.BackgroundTrack
             if (GUILayout.Button("Rotate"))
             {
                 Undo.RecordObject(trackHelper, "Rotate");
-                trackHelper.Rotate();
+                trackHelper.Rotate(5);
                 EditorUtility.SetDirty(trackHelper);
             }
         }
