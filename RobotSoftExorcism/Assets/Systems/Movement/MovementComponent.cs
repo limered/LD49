@@ -14,5 +14,12 @@ namespace Systems.Movement
         public Vector2ReactiveProperty Direction = new Vector2ReactiveProperty(Vector2.zero);
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
+
+        public void Stop()
+        {
+            Direction.Value = Vector2.zero;
+            Velocity = Vector2.zero;
+            Acceleration = Vector2.zero;
+        }
     }
 }
