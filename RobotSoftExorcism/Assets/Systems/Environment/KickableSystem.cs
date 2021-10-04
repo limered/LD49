@@ -31,12 +31,23 @@ namespace Systems.Environment
             switch (component.kickEffect)
             {
                 case KickEffect.Yeet:
+                    component.OldPosition = component.transform.position;
+                    var strength = component.kickStrength;
                     var body = component.GetComponent<Rigidbody>();
                     if (!body)
                     {
                         body = component.AddComponent<Rigidbody>();
                     }
-                    body.AddForce(new Vector3(component.kickStrength, component.kickStrength, 0));
+
+                    if (!body) return;
+                    body.useGravity = false;
+                    body.drag = 1;
+                    body.AddForce(new Vector3(strength, strength, 0));
+                    SystemUpdate(component)
+                        .TakeUntil(Observable.Timer(TimeSpan.FromMilliseconds(5000)))
+                        .DoOnCompleted(() => Object.Destroy(body))
+                        .Subscribe(_ => ReturnToGround(body, component))
+                        .AddTo(component);
                     break;
                 case KickEffect.YeetPerson:
                     var player = Object.FindObjectOfType<PlayerBrainComponent>();
@@ -45,6 +56,15 @@ namespace Systems.Environment
                     movement.AddForce(directionAway * component.kickStrength);
                     break;
             }
+        }
+
+        private void ReturnToGround(Rigidbody body, KickableComponent kickable)
+        {
+            var position = body.transform.position;
+            var dir = position.DirectionTo(kickable.OldPosition);
+            var dist = position.DistanceTo(kickable.OldPosition);
+            if (dist < 0.1) return;
+            body.AddForce(new Vector3(0, dir.y, 0) * 10);
         }
     }
 }

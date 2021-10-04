@@ -1,5 +1,6 @@
 ﻿using SystemBase;
 using UniRx;
+using UnityEngine;
 
 namespace Systems.Environment
 {
@@ -8,5 +9,6 @@ namespace Systems.Environment
         public KickEffect kickEffect;
         public readonly ReactiveCommand HasBeenKickedTrigger = new ReactiveCommand();
         public float kickStrength = 500;
+        public Vector3 OldPosition { get; set; }
     }
 }
