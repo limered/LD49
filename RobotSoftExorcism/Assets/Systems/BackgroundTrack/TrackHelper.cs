@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ namespace Systems.BackgroundTrack
 {
     public class TrackHelper : MonoBehaviour
     {
+
+        public int RotateSlider = 0; 
         // Start is called before the first frame update
         void Start()
         {
@@ -17,6 +20,13 @@ namespace Systems.BackgroundTrack
         void Update()
         {
 
+        }
+
+        private int old = 0;
+        private void OnValidate()
+        {
+            // Rotate(old - RotateSlider);
+            // old = RotateSlider;
         }
 
         public void Do()
@@ -39,7 +49,7 @@ namespace Systems.BackgroundTrack
             
         }
 
-        public void Rotate()
+        public void Rotate(int speed = 5)
         {
             BackgroundTrackComponent comp = GetComponent<BackgroundTrackComponent>();
             BackgroundTrackSystem system = new BackgroundTrackSystem();
@@ -47,7 +57,7 @@ namespace Systems.BackgroundTrack
                 comp.pointCount);
             foreach (TrackedObjectComponent trackedObject in comp.trackObjects)
             {
-                comp.speed = 5;
+                comp.speed = speed;
                 system.CalculatePosition(trackedObject);
             }
 
