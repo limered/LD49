@@ -5,8 +5,10 @@ using SystemBase;
 using Systems.Movement;
 using Systems.Player;
 using Systems.Player.Events;
+using Systems.Score;
 using UniRx;
 using UnityEngine;
+using Utils;
 using Utils.Plugins;
 using Random = UnityEngine.Random;
 
@@ -82,10 +84,13 @@ namespace Systems.Person
         {
             personMovement.Direction.Value =
                 (_player.Value.transform.position - person.transform.position).normalized;
-
+            var finishedGame = IoC.Game.GetComponent<ScoreComponent>().finishedGame;
+            if(finishedGame) return;
+            
             if (_player.Value.transform.position.DistanceTo(person.transform.position) < 5)
             {
                 MessageBroker.Default.Publish(new PlayerCaughtByPoliceEvent());
+                IoC.Game.GetComponent<ScoreComponent>().finishedGame = true;
             }
         }
 
