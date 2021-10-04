@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5632415775036205181}
   - component: {fileID: 5632415775036205182}
   - component: {fileID: 660643022}
+  - component: {fileID: -8942512890502626285}
   m_Layer: 9
   m_Name: baseperson
   m_TagString: Untagged
@@ -147,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movePattern: 1
+  personType: 0
 --- !u!114 &5632415775036205181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +188,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9af444bf00342ac9ec7cbbcf730e951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8942512890502626285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5632415775036205158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b27b422b606475a9c74c8c8963fc48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &5632415775810891256
 GameObject:
   m_ObjectHideFlags: 0
