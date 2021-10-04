@@ -6,5 +6,6 @@ namespace Systems.Person
     {
         public PersonMovePattern movePattern;
         public PersonType personType;
+        
     }
 }

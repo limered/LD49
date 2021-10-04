@@ -6,6 +6,7 @@ using Systems.Environment;
 using Systems.Movement;
 using Systems.Player.Events;
 using UniRx;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Systems.Player.States
@@ -23,6 +24,8 @@ namespace Systems.Player.States
                 .OrderBy(t => t.Item2)
                 .FirstOrDefault();
 
+            Debug.Log(distanceToPlayer);
+            
             if (nearestDrink != null && distanceToPlayer < 1.5f)
             {
                 MessageBroker.Default.Publish(new PlayerDrinkEvent());
