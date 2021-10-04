@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using StrongSystems.Audio;
 using SystemBase;
 using Systems.Player;
@@ -6,6 +8,8 @@ using Systems.SceneManagement.Events;
 using UniRx;
 using UnityEngine;
 using Utils;
+using Utils.DotNet;
+using Random = UnityEngine.Random;
 
 namespace Systems.SoundManagement
 {
@@ -64,10 +68,6 @@ namespace Systems.SoundManagement
                 .Subscribe(e => PlayKickReaction())
                 .AddTo(component);
             
-            MessageBroker.Default.Receive<PlayerTalksToBarkeeper>()
-                .Subscribe(e => BarkeeperTalks())
-                .AddTo(component);
-            
             MessageBroker.Default.Receive<PlayerPoebelEvent>()
                 .Subscribe(e => PoebelReaction[Random.Range(0, PoebelReaction.Length-1)].Play())
                 .AddTo(component);
@@ -75,11 +75,10 @@ namespace Systems.SoundManagement
             MessageBroker.Default.Receive<PlayerPukeEvent>()
                 .Subscribe(e => PukeReaction[Random.Range(0, PukeReaction.Length-1)].Play())
                 .AddTo(component);
-        }
 
-        private void BarkeeperTalks()
-        {
-            "go_home_male".Play();
+            Observable.Interval(TimeSpan.FromMilliseconds(8000))
+                .Subscribe(_ => GeneralReaction.ToList().Randomize().First().Play())
+                .AddTo(component);
         }
 
         private void CheckBarMusicAlreadyPlaying(SoundComponent component)
