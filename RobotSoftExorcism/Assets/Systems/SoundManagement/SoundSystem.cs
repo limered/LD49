@@ -35,7 +35,7 @@ namespace Systems.SoundManagement
         private void CheckBarMusicAlreadyPlaying(SoundComponent component)
         {
             var audioSource = IoC.Game.GetComponent<AudioSource>();
-            if (audioSource.clip.name == "barnight")
+            if (audioSource.clip.name == "shorterbarnight")
             {
                 return;
             }
