@@ -42,10 +42,10 @@
             fixed4 frag (v2f i) : SV_Target
             {
 				float2 uv = i.uv;
-				float X = uv.x*0.1f + _Time[1];
-				float Y = uv.y*0.1f + _Time[1];
-				uv.x += cos(X + Y)*0.05*cos(Y);
-				uv.y += sin(X - Y)*0.05*sin(Y);
+				float X = uv.x*0.01f + _Time[1];
+				float Y = uv.y*0.01f + _Time[1];
+				uv.x += cos(X + Y)*0.005*cos(Y);
+				uv.y += sin(X - Y)*0.005*sin(Y);
 				fixed4 col = tex2D(_MainTex, uv);
 
 				col *= float4(0.6f, 0.6f, 0.8f, 0.7f);
