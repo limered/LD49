@@ -11,7 +11,7 @@ namespace Systems.Ui
         public override void Register(CurtainComponent component)
         {
             MessageBroker.Default.Receive<PlayerEnterExitEvent>()
-                .Subscribe(e =>GoToNextScene(component))
+                .Subscribe(e => GoToNextScene(component))
                 .AddTo(component);
         }
 

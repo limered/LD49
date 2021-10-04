@@ -1,5 +1,4 @@
 using SystemBase;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Systems.Ui
