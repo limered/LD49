@@ -33,6 +33,8 @@ namespace Systems.Person
             {
                 switch (person.movePattern)
                 {
+                    case PersonMovePattern.Still:
+                        break;
                     case PersonMovePattern.Random:
                         personMovement.Direction.Value = Random.insideUnitCircle;
                         break;
