@@ -12,13 +12,13 @@ namespace Systems.SoundManagement
     [GameSystem]
     public class SoundSystem : GameSystem<SoundComponent>
     {
-        private string[] RodPuke = new[] { "did_he_female" };
-        private string[] RodKick = new[] { "did_he_female" };
-        private string[] RodPolice = new[] { "did_he_female" };
-        private string[] RodDrink = new[] { "did_he_female" };
-        private string[] RodFalling = new[] { "did_he_female" };
-        private string[] RodPoebel = new[] { "did_he_female" };
-        private string[] Police = new[] { "did_he_female" };
+        private string[] RodPuke = new[] { "puke_1", "puke_2", "puke_3", "puke_4", "puke_5" };
+        private string[] RodKick = new[] { "kicked_1", "kicked_2", "kicked_3", "kicked_4", "kicked_5", "kicked_6" };
+        private string[] RodPolice = new[] { "police_1", "police_2" };
+        private string[] RodDrink = new[] { "drink_1", "drink_2" };
+        private string[] RodFalling = new[] { "fall_1", "fall_2", "fall_3" };
+        private string[] RodPoebel = new[] { "poeble_1","poeble_2","poeble_3","poeble_4","poeble_5","poeble_6" };
+        private string[] Police = new[] { "police_3", "police_4" };
         
         private string[] PukeReaction = new []{ "did_he_female", "gross_female", "shame_female"};
         private string[] KickReaction = new[] { "looks_unstable_male", "police_female", "shame_female", "stop_him_female", "stop_male"};
