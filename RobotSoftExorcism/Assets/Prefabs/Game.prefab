@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 746857857}
   - component: {fileID: 161650089}
   - component: {fileID: 6762509675042498152}
+  - component: {fileID: 931893351991869616}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -75,7 +76,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9d866c356441c514c859764f8682167c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9338b9d1cca07a94ea36d04614f9ec76, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -178,3 +179,86 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 792ca204869ece0479808897d2b72c9e, type: 3}
   - {fileID: 8300000, guid: f01818862b4d35148a90aaa1d2f8248b, type: 3}
   - {fileID: 8300000, guid: fb6db238393216b4a971fc49b505fdb7, type: 3}
+--- !u!114 &931893351991869616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612177836528684100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc230bb4099941f49832cf1ca1a0ee31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxPitchChange: 0.07
+  Sounds:
+  - Name: calm_down_male
+    File: {fileID: 8300000, guid: 247b7605f04c435449444c551bf29fe2, type: 3}
+    Volume: 0.241
+  - Name: did_he_female
+    File: {fileID: 8300000, guid: 8959588f3fef7f6408c23c9338a4ca22, type: 3}
+    Volume: 0.289
+  - Name: get_lost_male
+    File: {fileID: 8300000, guid: b13f2cb9fdf346b4bbcb1c6134b12b73, type: 3}
+    Volume: 0.289
+  - Name: go_home_male
+    File: {fileID: 8300000, guid: 948e38bd4f735c54b85b9fd47bfa1d09, type: 3}
+    Volume: 0.666
+  - Name: gross_female
+    File: {fileID: 8300000, guid: b1cd4a553a33f074bba2804aa8cad165, type: 3}
+    Volume: 0.357
+  - Name: hammered_male
+    File: {fileID: 8300000, guid: 26bf360f9bac84c4c88f995760f432cf, type: 3}
+    Volume: 0.357
+  - Name: is_he_drunk_male
+    File: {fileID: 8300000, guid: e5bc0d197bcd0fb4691dbac81e692b06, type: 3}
+    Volume: 0.328
+  - Name: looks_drunk_female
+    File: {fileID: 8300000, guid: 40d33ad7d0103dd40a71e0234fb1c899, type: 3}
+    Volume: 0.328
+  - Name: looks_unstable_male
+    File: {fileID: 8300000, guid: d77cb8ffd6b94c8498c19c57ded03c03, type: 3}
+    Volume: 0.376
+  - Name: not_rioting_male
+    File: {fileID: 8300000, guid: 61bb4b0dc0f86bf429c80f27f6fffdb8, type: 3}
+    Volume: 0.309
+  - Name: police_female
+    File: {fileID: 8300000, guid: 08da0d1b27606f145bb520379ca9292f, type: 3}
+    Volume: 0.347
+  - Name: same_male
+    File: {fileID: 8300000, guid: 44ac4245bb3afa14297c7b3f1de05030, type: 3}
+    Volume: 0.357
+  - Name: shame_female
+    File: {fileID: 8300000, guid: 8242b0d2c0539b248b08f60e08cedb3e, type: 3}
+    Volume: 0.357
+  - Name: stop_him_female
+    File: {fileID: 8300000, guid: 00f6cb059595ce045a3dcd0ded41d82b, type: 3}
+    Volume: 0.27
+  - Name: stop_male
+    File: {fileID: 8300000, guid: 3fabac84a0fcdc84ba755450ccbf8966, type: 3}
+    Volume: 0.309
+  - Name: well_oiled_male
+    File: {fileID: 8300000, guid: b2c4abbc7b87be1458abff41129ba820, type: 3}
+    Volume: 0.425
+  - Name: why_drunk_male
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
+  - Name: puke
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
+  - Name: falling
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
+  - Name: poebel
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
+  - Name: caught
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
+  - Name: drink
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
+  - Name: kick
+    File: {fileID: 8300000, guid: 9cf341d8f55a1ed46a5a2cccdf3800ab, type: 3}
+    Volume: 0.338
