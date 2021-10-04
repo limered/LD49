@@ -457,7 +457,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2.35
-    functionName: PlayAgain
+    functionName: GoToNextScene
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
