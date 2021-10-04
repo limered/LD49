@@ -23,7 +23,7 @@ namespace Systems.Player.States
                 .OrderBy(t => t.Item2)
                 .FirstOrDefault();
 
-            if (nearestDrink != null && distanceToPlayer < 1)
+            if (nearestDrink != null && distanceToPlayer < 1.5f)
             {
                 MessageBroker.Default.Publish(new PlayerDrinkEvent());
                 context.Owner.criticalSwayFactor += 500;
