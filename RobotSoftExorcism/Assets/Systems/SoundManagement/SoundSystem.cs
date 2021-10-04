@@ -12,6 +12,14 @@ namespace Systems.SoundManagement
     [GameSystem]
     public class SoundSystem : GameSystem<SoundComponent>
     {
+        private string[] RodPuke = new[] { "did_he_female" };
+        private string[] RodKick = new[] { "did_he_female" };
+        private string[] RodPolice = new[] { "did_he_female" };
+        private string[] RodDrink = new[] { "did_he_female" };
+        private string[] RodFalling = new[] { "did_he_female" };
+        private string[] RodPoebel = new[] { "did_he_female" };
+        private string[] Police = new[] { "did_he_female" };
+        
         private string[] PukeReaction = new []{ "did_he_female", "gross_female", "shame_female"};
         private string[] KickReaction = new[] { "looks_unstable_male", "police_female", "shame_female", "stop_him_female", "stop_male"};
         private string[] PoebelReaction = new[] { "get_lost_male", "calm_down_male", "not_rioting_male", "police_female", "stop_him_female", "stop_male" };
@@ -40,18 +48,18 @@ namespace Systems.SoundManagement
                 .AddTo(component);
             
             //Sounds
-            //Todo Helen
-            // MessageBroker.Default.Receive<PlayerStateChangeEvent>()
-            //     .Subscribe(e => PlayRodriguesSound(e.PlayerState))
-            //     .AddTo(component);
-            // MessageBroker.Default.Receive<PlayerCaughtByPoliceEvent>()
-            // .Subscribe(e => "caught".Play())
-            // .AddTo(component);
-            //
-            // MessageBroker.Default.Receive<PlayerDrinkEvent>()
-            //     .Subscribe(e => "drink".Play())
-            //     .AddTo(component);
-            //
+            MessageBroker.Default.Receive<PlayerStateChangeEvent>()
+                .Subscribe(e => PlayRodriguesSound(e.PlayerState))
+                .AddTo(component);
+            
+            MessageBroker.Default.Receive<PlayerCaughtByPoliceEvent>()
+            .Subscribe(e => RodPolice[Random.Range(0, RodPolice.Length-1)].Play())
+            .AddTo(component);
+            
+            MessageBroker.Default.Receive<PlayerDrinkEvent>()
+                .Subscribe(e => RodDrink[Random.Range(0, RodDrink.Length-1)].Play())
+                .AddTo(component);
+            
             MessageBroker.Default.Receive<PlayerKickEvent>()
                 .Subscribe(e => PlayKickReaction())
                 .AddTo(component);
@@ -67,13 +75,10 @@ namespace Systems.SoundManagement
             MessageBroker.Default.Receive<PlayerPukeEvent>()
                 .Subscribe(e => PukeReaction[Random.Range(0, PukeReaction.Length-1)].Play())
                 .AddTo(component);
-            
-            //TODO play on enter bar scene "go_home_male".Play();
         }
 
         private void BarkeeperTalks()
         {
-            Debug.Log("Barkeeper");
             "go_home_male".Play();
         }
 
@@ -99,20 +104,26 @@ namespace Systems.SoundManagement
         {
             if (playerState == PlayerState.Puking)
             {
-                "puke".Play();
+                RodPuke[Random.Range(0, RodPuke.Length - 1)].Play();
             } else if (playerState == PlayerState.Falling)
             {
-                "falling".Play();
+                RodFalling[Random.Range(0, RodFalling.Length-1)].Play();
                 GeneralReaction[Random.Range(0, GeneralReaction.Length - 1)].Play();
             } else if (playerState == PlayerState.Poebeling)
             {
-                "poebel".Play();
+                RodPoebel[Random.Range(0, RodPoebel.Length - 1)].Play();
             }
+        }
+
+        private void RodWasCaught()
+        {
+            Police[Random.Range(0, Police.Length - 1)].Play();
+            RodPolice[Random.Range(0, RodPolice.Length - 1)].Play();
         }
 
         private void PlayKickReaction()
         {
-            "kick".Play();
+            RodKick[Random.Range(0, RodKick.Length - 1)].Play();
             KickReaction[Random.Range(0, KickReaction.Length - 1)].Play();
         }
     }
