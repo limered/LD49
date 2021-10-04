@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 161650089}
   - component: {fileID: 6762509675042498152}
   - component: {fileID: 931893351991869616}
+  - component: {fileID: 1596129712}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -78,7 +79,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9338b9d1cca07a94ea36d04614f9ec76, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.111
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -195,13 +196,13 @@ MonoBehaviour:
   Sounds:
   - Name: calm_down_male
     File: {fileID: 8300000, guid: 247b7605f04c435449444c551bf29fe2, type: 3}
-    Volume: 0.241
+    Volume: 0.726
   - Name: did_he_female
     File: {fileID: 8300000, guid: 8959588f3fef7f6408c23c9338a4ca22, type: 3}
     Volume: 0.289
   - Name: get_lost_male
     File: {fileID: 8300000, guid: b13f2cb9fdf346b4bbcb1c6134b12b73, type: 3}
-    Volume: 0.289
+    Volume: 0.61
   - Name: go_home_male
     File: {fileID: 8300000, guid: 948e38bd4f735c54b85b9fd47bfa1d09, type: 3}
     Volume: 0.666
@@ -246,91 +247,105 @@ MonoBehaviour:
     Volume: 0.338
   - Name: puke_1
     File: {fileID: 8300000, guid: 901f6b52a6c984ed7a64fe4201251ffd, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: puke_2
     File: {fileID: 8300000, guid: b737d221b2e6e4d758a196a4f16439fa, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: puke_3
     File: {fileID: 8300000, guid: b5e17dbfe32334cb49e720e51ffc93d3, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: puke_4
     File: {fileID: 8300000, guid: 76c794adb92b64cf2acd22a0994ee438, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: puke_5
     File: {fileID: 8300000, guid: f7e80d625a8fd497fa989d92b68fae6b, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: puke_5
     File: {fileID: 8300000, guid: f7e80d625a8fd497fa989d92b68fae6b, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: dog_1
     File: {fileID: 8300000, guid: 95e6549ef9c454566b531f454a11f95c, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: dog_2
     File: {fileID: 8300000, guid: a8166060422e1469cad6c568363a8a83, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: dog_3
     File: {fileID: 8300000, guid: 9ba16ad69b7a043319263508681cb7d2, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: drink_1
     File: {fileID: 8300000, guid: f6b6d9ab0f2c04d71be99619d1789e0e, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: drink_2
     File: {fileID: 8300000, guid: 029826619bfcf4ccd922d65c296d82e8, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: fall_1
     File: {fileID: 8300000, guid: 8465c8e5c816b44b185a8cdfd7afa70d, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: fall_2
     File: {fileID: 8300000, guid: d245f4a0d93544ae18d0f4ec298b4526, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: fall_3
     File: {fileID: 8300000, guid: 1e8424de4883d4bf6a08dd695151c933, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: kicked_1
     File: {fileID: 8300000, guid: 077257762786b4b669c50487421f31a0, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: kicked_2
     File: {fileID: 8300000, guid: f33eb3726f34c42079ed4476cd271fb0, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: kicked_3
     File: {fileID: 8300000, guid: 89fba0cb745014209a7930de01d9cab2, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: kicked_4
     File: {fileID: 8300000, guid: 73dc246889ab946d6ae1460d98d52cd5, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: kicked_5
     File: {fileID: 8300000, guid: 43c627be1790e4b4c9571d985989d41f, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: kicked_6
     File: {fileID: 8300000, guid: c02561d2ab733406abcdc3e1d5996fd1, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: poeble_1
     File: {fileID: 8300000, guid: ae6280edbebcb46deb0ac46c23bd186f, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: poeble_2
     File: {fileID: 8300000, guid: 597add3e3c7ea483f8ff34f2a5be1889, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: poeble_3
     File: {fileID: 8300000, guid: dd2821706aac246919dd7e9164dc0a37, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: poeble_4
     File: {fileID: 8300000, guid: c2d94dfe4031249b69ef1ca0fcc2a9bd, type: 3}
     Volume: 0.338
   - Name: poeble_5
     File: {fileID: 8300000, guid: dcfad910bdf64446bae291ecd5199eb9, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: poeble_6
     File: {fileID: 8300000, guid: 14bcd9abd310c4a59b16ce4884770850, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: police_1
     File: {fileID: 8300000, guid: b40f8f3eee0b545948b7e8a97383c374, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: police_2
     File: {fileID: 8300000, guid: f57db6d8234594e51863733be0780b25, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: police_3
     File: {fileID: 8300000, guid: c77f5ec8c660b4ef0a6e4c2337d81a05, type: 3}
-    Volume: 0.338
+    Volume: 1
   - Name: police_4
     File: {fileID: 8300000, guid: 74b170e3cc6314531a7f1adcafa2ae2e, type: 3}
-    Volume: 0.338
+    Volume: 1
+--- !u!114 &1596129712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612177836528684100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38306a40f9064a00943baf23ead339d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stickPrefab: {fileID: 7129970760631107564, guid: d01e9ea50f2184db39e25f0a69754f68, type: 3}
+  upAndDownThreshold: -3
