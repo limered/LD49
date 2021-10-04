@@ -5,8 +5,10 @@ using SystemBase.StateMachineBase;
 using Systems.Movement;
 using Systems.Player.Events;
 using Systems.Player.States;
+using Systems.Score;
 using UniRx;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace Systems.Player
@@ -41,6 +43,9 @@ namespace Systems.Player
                 .Sample(TimeSpan.FromMilliseconds(SwayDirectionChangeTime))
                 .Subscribe(_ => SetSwayDirection(component))
                 .AddTo(component);
+
+            var coffeesDrank = IoC.Game.GetComponent<ScoreComponent>().coffeeCount.Value;
+            component.criticalSwayFactor += coffeesDrank * 500;
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
