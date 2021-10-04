@@ -24,7 +24,9 @@ namespace Systems.Ui
                 {
                     var stick = GameObject.Instantiate(config.stickPrefab);
                     var renderer = stick.GetComponentInChildren<SpriteRenderer>();
-                    var fromAbove = component.transform.position.y > config.upAndDownThreshold;
+                    var fromAbove = component.orientation == StickOrientation.Auto
+                        ? component.transform.position.y > config.upAndDownThreshold
+                        : component.orientation == StickOrientation.FromAbove;
 
                     component.UpdateAsObservable()
                         .Subscribe(_ =>
