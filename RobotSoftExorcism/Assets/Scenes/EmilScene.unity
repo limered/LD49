@@ -140,15 +140,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2653723630255320136, guid: 3117db5d8198a11448cce6c37b14060f, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2653723630255320136, guid: 3117db5d8198a11448cce6c37b14060f, type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2653723630255320136, guid: 3117db5d8198a11448cce6c37b14060f, type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2653723630255320139, guid: 3117db5d8198a11448cce6c37b14060f, type: 3}
       propertyPath: m_RootOrder
@@ -362,6 +362,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1092553265, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092553267, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
+      propertyPath: m_Color.a
+      value: 0.27450982
+      objectReference: {fileID: 0}
+    - target: {fileID: 2043656634, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5937842047383565383, guid: 82c9e07a3731b9e4a845b7880d62811e, type: 3}
       propertyPath: m_Name
       value: Player
