@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 267407355685427102}
   - component: {fileID: 267407355685427103}
   - component: {fileID: 267407355685427100}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: taco_bowl
   m_TagString: Untagged
   m_Icon: {fileID: 0}

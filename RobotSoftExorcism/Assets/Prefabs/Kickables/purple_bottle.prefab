@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6822978891970733012}
   - component: {fileID: 6822978891970733013}
   - component: {fileID: 6822978891970733010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: purple_bottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Objects
   - Persons
   - Player
   - 
@@ -46,9 +46,6 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1841579551
-    locked: 0
-  - name: Kickable
-    uniqueID: 3785395089
     locked: 0
   - name: UI
     uniqueID: 3031429289
