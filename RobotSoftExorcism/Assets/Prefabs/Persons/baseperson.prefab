@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kickEffect: 1
-  kickStrength: 2000
+  kickStrength: 500
 --- !u!114 &5632415775036205182
 MonoBehaviour:
   m_ObjectHideFlags: 0
