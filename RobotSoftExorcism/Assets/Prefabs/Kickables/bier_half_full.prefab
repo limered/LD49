@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8570265485288533011}
   - component: {fileID: 8570265485288533008}
   - component: {fileID: 8570265485288533005}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bier_half_full
   m_TagString: Untagged
   m_Icon: {fileID: 0}
