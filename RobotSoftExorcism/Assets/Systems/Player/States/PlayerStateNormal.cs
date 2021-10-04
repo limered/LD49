@@ -30,6 +30,11 @@ namespace Systems.Player.States
             {
                 context.GoToState(new PlayerStatePoebling());
             }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                context.GoToState(new PlayerStateDrinking());
+            }
         }
     }
 }
