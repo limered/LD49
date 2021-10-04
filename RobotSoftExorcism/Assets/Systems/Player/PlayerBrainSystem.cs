@@ -16,7 +16,7 @@ namespace Systems.Player
     {
         private const int CalculateSwayTime = 100;
         private const int SwayDirectionChangeTime = 500;
-        private const float PukeIncreaseThreshold = 0.7f;
+        private const float PukeIncreaseThreshold = 0.8f;
         private const float FallThreshold = 1.5f;
         private const float FallPossibility = 0.8f;
 
@@ -41,18 +41,6 @@ namespace Systems.Player
                 .Sample(TimeSpan.FromMilliseconds(SwayDirectionChangeTime))
                 .Subscribe(_ => SetSwayDirection(component))
                 .AddTo(component);
-            
-            SystemUpdate(component)
-                .Subscribe(CheckSpecialActions)
-                .AddTo(component);
-        }
-
-        private void CheckSpecialActions(PlayerBrainComponent player)
-        {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                player.State.GoToState(new PlayerStatePoebling());
-            }
         }
 
         private static void ControlPlayer(PlayerBrainComponent player)
@@ -62,7 +50,7 @@ namespace Systems.Player
             {
                 SetPlayerMovement(movement);
                 RotatePlayerDependingOfMovement(player, movement);
-                MoveRandomlyIfIdle(movement);
+                MoveRandomlyIfIdle(player, movement);
                 ApplySway(player, movement);
             }
             StopPlayerIfItIsNotMoving(player, movement);
@@ -76,12 +64,12 @@ namespace Systems.Player
             }
         }
 
-        private static void MoveRandomlyIfIdle(MovementComponent movement)
+        private static void MoveRandomlyIfIdle(PlayerBrainComponent player, MovementComponent movement)
         {
-            if (movement.Direction.Value.magnitude < 0.01)
-            {
-                movement.Direction.Value = Random.insideUnitCircle;
-            }
+            if (movement.Direction.Value.magnitude > 0.01) return;
+            
+            var newRotation = Quaternion.AngleAxis(50, player.IdleSwayDirection);
+            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, newRotation, 0.05f);
         }
 
         private static void CalculatePukeFactor(PlayerBrainComponent player)
@@ -120,6 +108,8 @@ namespace Systems.Player
             var vel = player.GetComponent<MovementComponent>().Velocity;
             player.SwayDirection = Random.value > 0.5f ? new Vector2(-vel.y, vel.x).normalized : 
                 new Vector2(vel.y, -vel.x).normalized;
+
+            player.IdleSwayDirection = Random.insideUnitSphere;
         }
 
         private static void ApplySway(PlayerBrainComponent player, MovementComponent movement)
