@@ -7,6 +7,6 @@ namespace Systems.Environment
     {
         public KickEffect kickEffect;
         public readonly ReactiveCommand HasBeenKickedTrigger = new ReactiveCommand();
-        public float rekickTime = 500;
+        public float kickStrength = 500;
     }
 }
