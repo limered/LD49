@@ -16,6 +16,7 @@ namespace Systems.Player
         public float maxRotation;
 
         public StateContext<PlayerBrainComponent> State;
+        public GameObject animationParent;
 
         // Sway Stuff
         public float criticalSwayFactor;
@@ -36,6 +37,6 @@ namespace Systems.Player
         public float poebelRange;
 
         public float fallenDuration = 2000;
-        
+        public Vector3 IdleSwayDirection { get; set; }
     }
 }

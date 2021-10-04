@@ -1361,10 +1361,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goFriction: 2
   stopFriction: 5
-  maxMovementPosition: {x: 2, y: 0.1}
-  minMovementPosition: {x: -2, y: -5}
+  maxMovementPosition: {x: 27, y: 0.1}
+  minMovementPosition: {x: 0, y: -5}
   maxRotation: 40
-  criticalSwayFactor: 2000
+  animationParent: {fileID: 2919346758626185649}
+  criticalSwayFactor: 500
   pukeIncreaseValue: 10
   pukeDecreaseValue: 0.5
   maxPukeFactor: 100
