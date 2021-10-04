@@ -31,6 +31,16 @@ namespace Systems.Score
             MessageBroker.Default.Receive<PlayerDrinkEvent>()
                 .Subscribe(_ => component.coffeeCount.Value++)
                 .AddTo(component);
+
+            component.crime.Subscribe(value => CheckIfPoliceIsComing(value)).AddTo(component);
+        }
+
+        private void CheckIfPoliceIsComing(int value)
+        {
+            if (value >= 100)
+            {
+                MessageBroker.Default.Publish(new PlayerStressesPoliceEvent());
+            }
         }
     }
 }

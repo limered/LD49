@@ -13,11 +13,20 @@ namespace Systems.Ui
             MessageBroker.Default.Receive<PlayerEnterExitEvent>()
                 .Subscribe(e => GoToNextScene(component))
                 .AddTo(component);
+            
+            MessageBroker.Default.Receive<PlayerStressesPoliceEvent>()
+                .Subscribe(e => GoToNextScene(component))
+                .AddTo(component);
         }
 
         private void GoToNextScene(CurtainComponent component)
         {
             component.GetComponent<Animator>().Play("close_curtain");
+        }
+
+        private void GoToPrison(CurtainComponent component)
+        {
+            component.GoToSadEnd();
         }
     }
 }
