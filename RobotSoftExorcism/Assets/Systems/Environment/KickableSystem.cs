@@ -43,9 +43,16 @@ namespace Systems.Environment
                     body.useGravity = false;
                     body.drag = 1;
                     body.AddForce(new Vector3(strength, strength, 0));
+                    
                     SystemUpdate(component)
                         .TakeUntil(Observable.Timer(TimeSpan.FromMilliseconds(5000)))
-                        .DoOnCompleted(() => Object.Destroy(body))
+                        .DoOnCompleted(() =>
+                        {
+                            if (body)
+                            {
+                                Object.Destroy(body);
+                            }
+                        })
                         .Subscribe(_ => ReturnToGround(body, component))
                         .AddTo(component);
                     break;
@@ -60,11 +67,19 @@ namespace Systems.Environment
 
         private void ReturnToGround(Rigidbody body, KickableComponent kickable)
         {
-            var position = body.transform.position;
-            var dir = position.DirectionTo(kickable.OldPosition);
-            var dist = position.DistanceTo(kickable.OldPosition);
-            if (dist < 0.1) return;
-            body.AddForce(new Vector3(0, dir.y, 0) * 10);
+            try
+            {
+                if (!body) return;
+                var position = body.transform.position;
+                var dir = position.DirectionTo(kickable.OldPosition);
+                var dist = position.DistanceTo(kickable.OldPosition);
+                if (dist < 0.1) return;
+                body.AddForce(new Vector3(0, dir.y, 0) * 10);
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
         }
     }
 }
