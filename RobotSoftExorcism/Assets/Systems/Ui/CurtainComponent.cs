@@ -59,7 +59,7 @@ namespace Systems.Ui
             SceneManager.LoadScene("HappyEnd");
         }
 
-        private void GoToSadEnd()
+        public void GoToSadEnd()
         {
             SceneManager.LoadScene("SadEnd");
         }
