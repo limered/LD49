@@ -14,7 +14,7 @@ namespace Systems.Ui
                 .Subscribe(e => GoToNextScene(component))
                 .AddTo(component);
             
-            MessageBroker.Default.Receive<PlayerStressesPoliceEvent>()
+            MessageBroker.Default.Receive<PlayerCaughtByPoliceEvent>()
                 .Subscribe(e => GoToNextScene(component))
                 .AddTo(component);
         }

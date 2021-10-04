@@ -1,4 +1,5 @@
 ﻿using SystemBase;
+using Systems.Player;
 using Systems.Player.Events;
 using UniRx;
 using UnityEngine;
@@ -38,14 +39,12 @@ namespace Systems.Score
 
         private void CheckIfPoliceIsComing(ScoreComponent component, int value)
         {
-            if (value >= 100)
-            {
-                var police = GameObject.Instantiate(component.police);
-                police.transform.position = new Vector3(4, -2.5f, 0); //TODO set correct position
-                
-                //TODO play animation with police
-                MessageBroker.Default.Publish(new PlayerStressesPoliceEvent());
-            }
+            if (value < 100) return;
+            
+            var police = GameObject.Instantiate(component.police);
+            var playerBrainComponent = GameObject.FindObjectOfType<PlayerBrainComponent>();
+            var pos = playerBrainComponent.transform.position;
+            police.transform.position = new Vector3(pos.x + 10, -2.5f, 0);
         }
     }
 }
