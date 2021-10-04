@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using SystemBase;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIStartComponent : MonoBehaviour
+public class UIEndComponent : MonoBehaviour
 {
+    public GameObject Curtain;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            SceneManager.LoadScene("BarScene");
+            Curtain.GetComponent<Animator>().Play("close_curtain");
         }
     }
 }
