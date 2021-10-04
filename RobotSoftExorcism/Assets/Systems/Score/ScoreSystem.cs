@@ -27,6 +27,10 @@ namespace Systems.Score
             MessageBroker.Default.Receive<PlayerPoebelEvent>()
                 .Subscribe(_ => component.crime.Value += (int) Score.Poebel)
                 .AddTo(component);
+
+            MessageBroker.Default.Receive<PlayerDrinkEvent>()
+                .Subscribe(_ => component.coffeeCount.Value++)
+                .AddTo(component);
         }
     }
 }
