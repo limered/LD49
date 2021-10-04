@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Assets.Utils.Math;
 using SystemBase;
 using Systems.Movement;
@@ -57,6 +57,8 @@ namespace Systems.Person
                         }
                         break;
                     case PersonMovePattern.BehindBar:
+                        var dir = Random.value;
+                        personMovement.Direction.Value = (dir > 0.5f) ? Vector2.left : Vector2.right;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
