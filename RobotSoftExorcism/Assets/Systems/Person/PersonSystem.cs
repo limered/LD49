@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.Utils.Math;
+using StrongSystems.Audio;
 using SystemBase;
 using Systems.Movement;
 using Systems.Player;
@@ -19,9 +20,12 @@ namespace Systems.Person
         public override void Register(PersonComponent component)
         {
             _player.WhereNotNull()
-                .Subscribe(_ => SystemUpdate(component)
-                    .Subscribe(UpdatePerson)
-                    .AddTo(component))
+                .Subscribe(_ =>
+                {
+                    SystemUpdate(component)
+                        .Subscribe(UpdatePerson)
+                        .AddTo(component);
+                })
                 .AddTo(component);
         }
 
@@ -88,6 +92,9 @@ namespace Systems.Person
         public override void Register(PlayerBrainComponent component)
         {
             _player.Value = component;
+            
+            Observable.Timer(TimeSpan.FromMilliseconds(3000))
+                .Subscribe(_ => "go_home_male".Play());
         }
     }
 }
