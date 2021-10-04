@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Assets.Utils.Math;
 using SystemBase;
 using Systems.Movement;
@@ -55,6 +55,8 @@ namespace Systems.Person
                             personMovement.Direction.Value =
                                 (new Vector3(pointInFrontOfPlayer.x, pointInFrontOfPlayer.y) - person.transform.position).normalized;
                         }
+                        break;
+                    case PersonMovePattern.BehindBar:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
