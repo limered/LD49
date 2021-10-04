@@ -5,5 +5,6 @@
         Random,
         Follow,
         Block,
+        BehindBar
     }
 }

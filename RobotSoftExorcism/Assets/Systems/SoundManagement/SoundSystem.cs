@@ -56,6 +56,10 @@ namespace Systems.SoundManagement
             //     .Subscribe(e => "kick".Play())
             //     .AddTo(component);
             
+            MessageBroker.Default.Receive<PlayerTalksToBarkeeper>()
+                .Subscribe(e => BarkeeperTalks())
+                .AddTo(component);
+            
             MessageBroker.Default.Receive<PlayerPoebelEvent>()
                 .Subscribe(e => PoebelReaction[Random.Range(0, PoebelReaction.Length-1)].Play())
                 .AddTo(component);
@@ -67,9 +71,14 @@ namespace Systems.SoundManagement
             //TODO play on enter bar scene "go_home_male".Play();
         }
 
+        private void BarkeeperTalks()
+        {
+            Debug.Log("Barkeeper");
+            "go_home_male".Play();
+        }
+
         private void CheckBarMusicAlreadyPlaying(SoundComponent component)
         {
-            "go_home_male".Play();
             var audioSource = IoC.Game.GetComponent<AudioSource>();
             if (audioSource.clip.name == "shorterbarnight")
             {
