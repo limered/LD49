@@ -20,7 +20,7 @@ namespace Systems.Environment
             var x = Mathf.Sin(time) * 0.2f + 0.8f;
             var y = Mathf.Cos(time) * 0.2f + 0.8f;
             drink.transform.localScale = new Vector3(x, y, 0);
-            drink.transform.rotation = Quaternion.AngleAxis(Mathf.Sin(time) * 360f, Vector3.up);
+            drink.transform.localRotation = Quaternion.AngleAxis(Mathf.Sin(time) * 360f, Vector3.up);
         }
     }
 }
