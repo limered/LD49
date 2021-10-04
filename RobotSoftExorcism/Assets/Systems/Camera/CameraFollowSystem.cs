@@ -49,6 +49,10 @@ namespace Systems.Camera
                 _newPosition = currentPosition;
                 _newPosition.x += (Mathf.Abs(distance.x) - Mathf.Abs(component.followThreshold)) *
                                   Mathf.Sign(distance.x);
+                if (_newPosition.x - 9.0f < 0.0f)
+                {
+                    _newPosition = currentPosition;
+                }
             }
         }
     }
